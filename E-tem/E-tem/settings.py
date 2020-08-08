@@ -140,3 +140,11 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# 이메일 확인을 하지 않음.
+SOCIAL_ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_AUTHENTICATION_METHOD = 'Email'
+ACCOUNT_USERNAME_REQUIRED = False
+
+# 유저 커스텀!!!!!!
+SOCIALACCOUNT_ADAPTER = 'adapters.SocialAccountAdapter'

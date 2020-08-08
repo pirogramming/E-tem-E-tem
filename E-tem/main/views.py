@@ -51,7 +51,9 @@ def add_one_to_cart(request, template_id):
 
 
 def show_cart_item(request):
-    queryset = CartItem.objects.all()
+    user_cart = Cart.objects.get(cart_id=request.user.username)
+    queryset = CartItem.objects.filter(cart = user_cart.id)
+
     context = {
         "object_list": queryset,
     }

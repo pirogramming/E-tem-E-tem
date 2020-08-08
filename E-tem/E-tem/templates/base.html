@@ -49,8 +49,10 @@
             {% endblock %}
         </div>
         {% if user.is_authenticated %}
-        <a href = "/allauth/logout"> 로그아웃 </a>
-        <a href="{% url 'mypage' %}">My page</a>
+        <ul class = "nav_list">
+            <li class = "nav_item"><a href = "/allauth/logout "> 로그아웃 </a></li>
+            <li class = "nav_item"><a href="{% url 'mypage' %}">My page</a></li>
+        </ul>
         {% else %}
         <a href = "{% url 'loginhome' %}"> 로그인 </a>
         {% endif %}
@@ -63,7 +65,7 @@
     <section class="jumbotron text-center">
 
         <div class="container">
-            <h1> PTPick! </h1>
+            <h1> E-tem E-tem </h1>
             <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator,
                 etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
             <p>

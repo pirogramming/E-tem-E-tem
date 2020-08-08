@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-마이페이지입니다.
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<a href="{% url 'download_list' %}"> 최근 다운로드 목록</a>
+{% endblock%}
