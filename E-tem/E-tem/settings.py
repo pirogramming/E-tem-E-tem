@@ -68,7 +68,7 @@ ROOT_URLCONF = 'E-tem.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'E-tem/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -145,4 +145,10 @@ SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/'
 
-LOGOUT_REDIRECT_URL = reverse_lazy('E-tem')
+LOGOUT_REDIRECT_URL = '/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

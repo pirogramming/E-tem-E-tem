@@ -1,17 +1,26 @@
-{% for ppt in object_list %}
-<div class="col-md-4">
-    <div class="card mb-4 shadow-sm">
-        <a href={{ ppt.template.detail_page }} target="_blank">
-            <img src={{ ppt.template.img_src }} height="200" width="350" style="align-items: center">
-        </a>
-        <div class="btn-group">
-            <button type="button" class="btn btn-sm btn-outline-secondary">
-                <a href="#">삭제</a>
-            </button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">
-                <a href="{{ ppt.template.download_link }}">다운로드</a>
-            </button>
+{% extends 'base.html' %}
+{% block content %}
+    {% for ppt in object_list %}
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+            <a href={{ ppt.template.detail_page }} target="_blank">
+                <img src={{ ppt.template.img_src }} height="200" width="350" style="align-items: center">
+            </a>
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary">
+                    <a href="{% url 'cart_item_delete' ppt.id %}" onclick="javascript:one_delete_success()">삭제</a>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">
+                    <a href="{{ ppt.template.download_link }}">다운로드</a>
+                </button>
+            </div>
         </div>
     </div>
-</div>
-{% endfor %}
+    {% endfor %}
+
+    <script>
+        function one_delete_success() {
+            alert('템플릿 삭제.')
+        }
+    </script>
+{% endblock %}
