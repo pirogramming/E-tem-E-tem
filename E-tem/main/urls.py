@@ -4,8 +4,7 @@ from .views import main, add_one_to_cart, show_cart_item, show_download_list, ad
 import login.views
 
 urlpatterns = [
-    path('', login.views.loginhome, name='login'),
-    path('main/', main, name='main'),
+    path('', main, name='main'),
     path('add/<int:template_id>/', add_one_to_cart, name="add_one_to_cart"),
     path('cart/', show_cart_item, name="cart"),
     path('adds/<int:templates_id>/', add_one_to_download_list, name="add_one_to_download_list"),

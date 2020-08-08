@@ -28,8 +28,6 @@ def main(request):
     # return render(request, "connect/main.html", context={'ppts': ppts})
     return render(request, "main/main.html", context)
 
-# def myinfo(request):
-#     return render(request, "main/mypage.html")
 
 def add_one_to_cart(request, template_id):
     template = Powerpoint.objects.get(id=template_id)
