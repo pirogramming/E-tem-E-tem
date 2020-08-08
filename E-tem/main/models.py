@@ -49,7 +49,8 @@ class RecentItem(models.Model):
 
 
 class Download_List(models.Model):
-    download_id = models.CharField(max_length=100, blank=True)
+    # download_id = models.CharField(max_length=100, blank=True)
+    user_id = models.IntegerField()
     user_num = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):

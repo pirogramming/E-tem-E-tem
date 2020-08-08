@@ -13,7 +13,7 @@
                             </a>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">
-                                    <a href="{% url 'add_one_to_cart' ppt.id %}" onclick="javascript:one_cart_added_success()">장바구니 담기</a>
+                                    <a onclick="javascript:one_cart_added_success()">장바구니 담기</a>
                                 </button>
                                 <button type="button" class="btn btn-sm btn-outline-secondary">
                                     <a href="{% url 'add_one_to_download_list' ppt.id %}">개별 다운로드</a>
@@ -88,15 +88,26 @@
 
 <script>
 
-    function one_cart_added_success(){
-        alert('장바구니에 템플릿이 담겼습니다.')
-    }
 // localStorage.setItem("scroll_position", document.documentElement.scrollTop);
 // if(localStorage.getItem("scroll_position" != null){
 //     var scrollPosition = localStorage.getItem("scroll_position");
 //     //Scroll to position
 //     window.scrollTo(0, scrollPosition);
 // }
+
+    function one_cart_added_success(aId){
+        $.ajax({
+            url: '/add/9',
+            async: true,
+            type: 'GET',
+            success: function() {
+                console.log('success')
+            },
+            error: function() {
+                console.log('failure')
+            },
+        });
+    }
 
     $(document).ready(function () {
 
