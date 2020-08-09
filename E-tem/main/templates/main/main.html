@@ -1,165 +1,70 @@
 {% extends 'base.html' %}
 {% block content %}
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+</head>
+
+<body>
 <main role="main">
 
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="row">
-                {% for ppt in object_list %}
-                    <div class="col-md-4">
-                        <div class="card mb-4 shadow-sm">
-                            <a href="{{ ppt.detail_page }}" target="_blank">
-                                <img src={{ ppt.img_src }} height="200" width="350" style="align-items: center">
-                            </a>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">
-                                    <a onclick="javascript:one_cart_added_success()">장바구니 담기</a>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">
-                                    <a href="{% url 'add_one_to_download_list' ppt.id %}">개별 다운로드</a>
-                                </button>
-                            </div>
+                {% for ppt in template_list %}
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <a href="{{ ppt.detail_page }}" target="_blank">
+                            <img src={{ ppt.img_src }} height="200" width="350" style="align-items: center">
+                        </a>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                <a onclick="javascript:one_cart_added_success()">장바구니 담기</a>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                <a href="{% url 'add_one_to_download_list' ppt.id %}">개별 다운로드</a>
+                            </button>
                         </div>
                     </div>
+                </div>
                 {% endfor %}
             </div>
 
-            <!--페이지 넘기는 코드-->
-            <ul class="pagination">
-                <li class="page-item">    <!-- Jump to First Page -->
-                    {% if object_list.number != 1 %}
-                        <li class="previous">
-                            <a href="?page=1">
-                                <span aria-hidden="true">&laquo;</span></a>
-                            {% else %}
-                        <li class="previous disabled">
-                        <a><span aria-hidden="true">&laquo;</span></a>
-                    {% endif %}
-                    </li>
-                <li class="page-item">  <!-- Jump to Prvious Page -->
-                    {% if object_list.has_previous %}
-                        <li class="previous"><a href="?page={{ object_list.previous_page_number }}">
-                            <span aria-hidden="true">‹</span></a>
-                            {% else %}
-                        <li class="previous disabled"><a>‹</a>
-                    {% endif %}
-                    </li>
-                {% if object_list.has_previous %}
-                    <li class="page-item">  <!-- Show Previous 4 page numbers -->
-                    <li class="previous"><a class="skip_prev" href="">...</a></li>
-                {% else %}
-                    <li class="next disabled"><a>...</a>
-                {% endif %}
-                </li>
-                {% for i in "1234567891" %}
-                    <!-- Change the range ("12345") according to your choice to show numbers -->
-                    <li class="pg" data= {{ i }}><a class="page_number" href=""> </a>
-                {% endfor %}
-
-                {% if object_list.has_next %}
-                    <li class="page-item">  <!-- Show next 4 page numbers -->
-                    <li class="previous"><a class="skip_next" href="">...</a></li>
-                {% else %}
-                    <li class="next disabled"><a>...</a>
-                {% endif %}
-                </li>
-                <li class="page-item">  <!-- Jump to Next Page -->
-                    {% if object_list.has_next %}
-                        <li class="previous"><a href="?page={{ object_list.next_page_number }}">›</a></li>
-                    {% else %}
-                        <li class="next disabled"><a>›</a>
-                    {% endif %}
-                    </li>
-                <li class="page-item">  <!-- Jump to Last Page -->
-                    {% if object_list.number != object_list.paginator.num_pages %}
-                        <li class="previous"><a href="?page={{ object_list.paginator.num_pages }}">»</a>
-                        </li>
-                    {% else %}
-                        <li class="next disabled"><a>»</a>
-                    {% endif %}
-                    </li>
-            </ul>
-            <!--여기까지 페이지 넘기는 코드-->
         </div>
-    </div>
+        <div class="pagination ">
+    <span class="d-flex ">
+        {% if template_list.has_previous %}
+            <li class="page-item "><a href="?page=1" class="page-link">&laquo; 첫 페이지</a></li>
+        {% endif %}
+
+        {% if template_list.number > 5 %}
+        <li class="page-item "><a href="?page={{ previous_block }}" class="page-link">이전</a></li>
+        {% endif %}
+
+        {% for i in p_range %}
+        {% if template_list.number == i %}
+        <li class="page-item active"><a href="?page={{i}}" class="page-link">{{i}}</a></li>
+        {% else %}
+        <li class="page-item "><a href="?page={{i}}" class="page-link" >{{i}}</a></li>
+        {% endif %}
+        {% endfor %}
+
+        {% if template_list.number < template_list.paginator.num_pages  %}
+            <li class="page-item "><a href="?page={{ next_block }}" class="page-link">다음</a></li>
+        {% endif %}
+        {% if template_list.has_next %}
+            <li class="page-item "><a href="?page={{ template_list.paginator.num_pages }}" class="page-link">마지막 페이지 &raquo;</a></li>
+        {% endif %}
+
+    </span>
+</div>
     </div>
 </main>
+</body>
 
-
+<!--여기에 ajax로 장바구니 담기-->
 <script>
 
-// localStorage.setItem("scroll_position", document.documentElement.scrollTop);
-// if(localStorage.getItem("scroll_position" != null){
-//     var scrollPosition = localStorage.getItem("scroll_position");
-//     //Scroll to position
-//     window.scrollTo(0, scrollPosition);
-// }
-
-    function one_cart_added_success(aId){
-        $.ajax({
-            url: '/add/9',
-            async: true,
-            type: 'GET',
-            success: function() {
-                console.log('success')
-            },
-            error: function() {
-                console.log('failure')
-            },
-        });
-    }
-
-    $(document).ready(function () {
-
-        var skip_pages = 10; //change your number accordingly you want to show numbers
-        var total_pages = {{ object_list.paginator.num_pages }};
-        var current_page = {{ object_list.number }};
-        var factor = Math.floor(current_page / skip_pages);
-
-        $(".page_number").each(function (i, obj) {   //Showing the discrete numbers
-
-            var page = factor * (skip_pages) + i + 1;
-            if (current_page % skip_pages == 0)
-                page = (factor - 1) * skip_pages + i + 1;
-            if (page - 1 < total_pages) {
-                $(this).html(page);
-                $(this).attr("href", "?page=" + page);
-            } else {
-                var x = i + 1;
-                $('li[data=' + x + ']').css("display", "none");
-            }
-
-
-        });
-        var page = current_page % skip_pages;
-        if (page == 0)
-            page = skip_pages;
-        $('li[data=' + page + ']').each(function () {   //Deciding the active class
-
-            $('li[data=' + page + ']').addClass("active");
-        });
-
-        $(".skip_next").click(function () {   //Skip next … Function
-
-            if (current_page % skip_pages == 0)
-                factor = factor - 1;
-            var page = (factor + 1) * skip_pages + 1;
-            if (page < total_pages)
-                $(this).attr("href", "?page=" + page);
-            else
-                $(this).attr("href", "?page=" + total_pages);
-        })
-        $(".skip_prev").click(function () { //Skip Previous … Function
-
-            if (current_page % skip_pages == 0)
-                factor = factor - 1;
-            var page = skip_pages * (factor - 1) + 1;
-            if (page > 0)
-                $(this).attr("href", "?page=" + page);
-            else
-                $(this).attr("href", "?page=" + "1");
-        })
-    })
 
 </script>
 {% endblock %}

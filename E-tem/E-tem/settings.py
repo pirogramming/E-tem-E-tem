@@ -39,6 +39,7 @@ INSTALLED_APPS = [
 
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.naver',
+    'bootstrap_pagination',
 ]
 
 MIDDLEWARE = [

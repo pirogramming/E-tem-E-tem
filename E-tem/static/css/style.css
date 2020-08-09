@@ -20,3 +20,9 @@
 .page_number > a.active {
     color: pink;
 }
+
+footer {
+    height: 100px;
+
+   background:pink;
+}

@@ -1,32 +1,40 @@
 import time
 
 from django.shortcuts import render, redirect
-from .models import Powerpoint, Cart, CartItem, User, Download_List, Download_Item, Myinfo
+from .models import *
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import math
 
 from django.db import IntegrityError
 from django.contrib import messages
+
 
 # Create your views here.
 
 
 def main(request):
     queryset = Powerpoint.objects.all().order_by("id")
-    paginator = Paginator(queryset, 9)  # posts per page
+    paginator = Paginator(queryset, 9)
     page = request.GET.get('page')
+    template_list = paginator.get_page(page)
+    page_range = 5
     try:
-        queryset = paginator.page(page)
-    except PageNotAnInteger:
-        queryset = paginator.page(1)
-    except EmptyPage:
-        queryset = paginator.page(paginator.num_pages)
-
-    context = {
-        "object_list": queryset,
-    }
-    # return render(request, "connect/main.html", context={'ppts': ppts})
-    return render(request, "main/main.html", context)
+        current_block = math.ceil(int(page) / page_range)
+    except:
+        page = 1
+        current_block = math.ceil(int(page) / page_range)
+    start_block = (current_block - 1) * page_range
+    end_block = start_block + page_range
+    p_range = paginator.page_range[start_block:end_block]
+    previous_block = int(page) - 5
+    next_block = int(page) + 5
+    return render(request, 'main/main.html', {
+        'template_list': template_list,
+        'p_range': p_range,
+        'previous_block': previous_block,
+        'next_block': next_block,
+    })
 
 
 def add_one_to_cart(request, template_id):
@@ -66,6 +74,7 @@ def show_cart_item(request):
     }
     # return render(request, "connect/main.html", context={'ppts': ppts})
     return render(request, "main/cart.html", context)
+
 
 def add_one_to_download_list(request, templates_id):
     templates = Powerpoint.objects.get(id=templates_id)
