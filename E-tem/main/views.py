@@ -1,10 +1,13 @@
 import time
 
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import *
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import math
+from django.contrib.auth.decorators import login_required
+
 
 from django.db import IntegrityError
 from django.contrib import messages
@@ -37,6 +40,7 @@ def main(request):
     })
 
 
+@login_required
 def add_one_to_cart(request, template_id):
     template = Powerpoint.objects.get(id=template_id)
     try:
@@ -47,24 +51,18 @@ def add_one_to_cart(request, template_id):
         )
         cart.save()
 
-    # cart_item, is_created = CartItem.objects.get_or_create(
-    #     template=template,
-    #     cart=cart,
-    # )
-    # return redirect('main')
-    try:
+    cart_item, is_created = CartItem.objects.get_or_create(
+        template=template,
+        cart=cart,
+    )
+    if not is_created :
+        return HttpResponse("이미 장바구니에 존재하는 템플릿입니다.")
 
-        cart_item = CartItem.objects.create(
-            template=template,
-            cart=cart,
-        )
-        cart_item.save()
-        return redirect('main')
-
-    except IntegrityError:
-        return redirect('main')
+    print('******',is_created)
+    return redirect('main')
 
 
+@login_required
 def show_cart_item(request):
     user_cart = Cart.objects.get(cart_id=request.user.id)
     queryset = CartItem.objects.filter(cart=user_cart.id)
@@ -76,6 +74,7 @@ def show_cart_item(request):
     return render(request, "main/cart.html", context)
 
 
+@login_required
 def add_one_to_download_list(request, templates_id):
     templates = Powerpoint.objects.get(id=templates_id)
 
@@ -102,6 +101,7 @@ def add_one_to_download_list(request, templates_id):
     return redirect('main')
 
 
+@login_required
 def show_download_list(request):
     user_download_list = DownloadList.objects.get(user_id=request.user.id)
     queryset = DownloadItem.objects.filter(download = user_download_list.id)
@@ -112,10 +112,12 @@ def show_download_list(request):
     return render(request, "main/download_list.html", contexts)
 
 
+@login_required
 def delete_cart_item(request, template_id):
     CartItem.objects.delete(id=template_id)
     return redirect('cart')
 
 
+@login_required
 def myinfo(request):
     return render(request, "main/mypage.html")

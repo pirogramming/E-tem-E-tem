@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 
+
 # Create your models here.
 
 
@@ -9,6 +10,7 @@ class Powerpoint(models.Model):
     img_src = models.URLField()
     download_link = models.TextField(blank=True, null=True)
     detail_page = models.TextField(blank=True, null=True)
+
     # color_tag = models.TextField(blank=True, null=True)
     # id = models.IntegerField(primary_key=True, blank=True)
 
@@ -17,9 +19,10 @@ class Powerpoint(models.Model):
 
 
 class Cart(models.Model):
-    # cart_id = models.CharField(max_length=100, blank=True)
-    cart_id = models.IntegerField()
+    cart_id = models.CharField(max_length=100, blank=True)
+    # cart_id = models.IntegerField(blank=True)
     user_num = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+
     # ppt_cart = models.ManyToManyField(Powerpoint)
 
     def __str__(self):
@@ -27,8 +30,8 @@ class Cart(models.Model):
 
 
 class CartItem(models.Model):
-    template = models.ForeignKey(Powerpoint, on_delete=models.CASCADE, related_name='template')
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    template = models.ForeignKey(Powerpoint, on_delete=models.CASCADE, related_name='template')
 
     class Meta:
         unique_together = (("template", "cart"),)
@@ -39,7 +42,8 @@ class CartItem(models.Model):
 
 class Recent(models.Model):
     user_num = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    recent_id = models.IntegerField()
+    recent_id = models.IntegerField(null=True)
+
     # recent_id = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
@@ -56,7 +60,7 @@ class RecentItem(models.Model):
 
 class DownloadList(models.Model):
     # download_id = models.CharField(max_length=100, blank=True)
-    user_id = models.IntegerField()
+    user_id = models.IntegerField(null=True)
     user_num = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
@@ -77,7 +81,7 @@ class ColorTag(models.Model):
 
 class PPT_tag(models.Model):
     template = models.ForeignKey(Powerpoint, on_delete=models.CASCADE, null=True)
-    ppt_tag = models.ForeignKey(ColorTag, on_delete=models.CASCADE , null=True)
+    ppt_tag = models.ForeignKey(ColorTag, on_delete=models.CASCADE, null=True)
 
 
 class Myinfo(models.Model):
