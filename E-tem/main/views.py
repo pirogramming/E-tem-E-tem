@@ -105,7 +105,7 @@ def add_one_to_download_list(request, templates_id):
 def show_download_list(request):
     user_download_list = DownloadList.objects.get(user_id=request.user.id)
     queryset = DownloadItem.objects.filter(download = user_download_list.id)
-    # 이름 변경??
+
     contexts = {
         "download_items": queryset,
     }
