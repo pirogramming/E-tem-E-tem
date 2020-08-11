@@ -15,6 +15,10 @@ class Powerpoint(models.Model):
     class Meta:
         db_table = 'pptbizcam_real'
 
+class Count(models.Model):
+    template = models.ForeignKey(Powerpoint, on_delete=models.CASCADE)
+    counts = models.IntegerField(default=0)
+
 
 class Cart(models.Model):
     # cart_id = models.CharField(max_length=100, blank=True)
@@ -56,7 +60,7 @@ class RecentItem(models.Model):
 
 class DownloadList(models.Model):
     # download_id = models.CharField(max_length=100, blank=True)
-    user_id = models.IntegerField()
+    user_id = models.IntegerField(null=True)
     user_num = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):

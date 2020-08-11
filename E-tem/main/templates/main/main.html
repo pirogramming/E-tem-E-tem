@@ -44,9 +44,12 @@
                             <button type="button" class="btn btn-sm btn-outline-secondary">
                                 <a href="{% url 'add_one_to_cart' ppt.id %}">장바구니 담기</a>
                             </button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                <a href="{% url 'add_one_to_download_list' ppt.id %}">개별 다운로드</a>
-                            </button>
+<!--                            <form action="/count/{{ppt.id}}/" method="post">-->
+<!--                                {% csrf_token %}-->
+                                <button type="button" class="btn btn-sm btn-outline-secondary" name="download" value="{{ppt.id}}">
+                                    <a href="{% url 'add_one_to_download_list' ppt.id %}">개별 다운로드</a>
+                                </button>
+<!--                            </form>-->
                         </div>
                     </div>
                 </div>

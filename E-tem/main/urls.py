@@ -11,4 +11,5 @@ urlpatterns = [
     path('download_list/', show_download_list, name="download_list"),
     path('main/mypage/', myinfo, name="mypage"),
     path('remove/<int:template_id>/', delete_cart_item, name="cart_item_delete"),
+    path('count/<int:template_id>/', download_count, name="download_count"),
 ]

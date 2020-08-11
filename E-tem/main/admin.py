@@ -7,6 +7,4 @@ class BoardAdmin(ImportExportMixin, admin.ModelAdmin):
     pass
 
 admin.site.register(ColorTag, BoardAdmin)
-
 admin.site.register(PPT_tag, BoardAdmin)
-
