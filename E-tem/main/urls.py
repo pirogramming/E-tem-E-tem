@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from .views import main, add_one_to_cart, show_cart_item, show_download_list, add_one_to_download_list, delete_cart_item, myinfo
+from .views import *
 import login.views
 
 urlpatterns = [

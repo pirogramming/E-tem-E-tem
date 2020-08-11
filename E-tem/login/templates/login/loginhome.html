@@ -1,7 +1,11 @@
+{% extends 'base.html' %}
 {% load socialaccount %}
 {% providers_media_js %}
 
 {% load staticfiles %}
+
+
+{% block content %}
 
 <html lang="en">
 <head>
@@ -38,6 +42,20 @@
     <!--        <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">-->
     <meta name="theme-color" content="#563d7c">
 
+    <style>
+        .login_box {
+            height: 500px;
+
+        }
+        .login_box1{
+            margin-top: 150px;
+        }
+
+        .login_box h1{
+            margin-top: 100px;
+        }
+    </style>
+
 
 </head>
 
@@ -45,20 +63,8 @@
 <body>
 
 
-<div class="navbar navbar-dark bg-dark shadow-sm">
-    <div class="container d-flex justify-content-between">
-        <a href="{% url 'main' %}" class="navbar-brand d-flex align-items-center">
-            <strong>E-tem E-tem 신이나</strong>
-        </a>
-
-
-    </div>
-</div>
-
 <div class="container" style="color: black; display:flex; justify-content: center">
     <div style="width:30vw; margin-top:1vh;">
-        <h1>Social Login</h1>
-
 
         <!--<a href = "/login/signup">회원가입</a>-->
         <!--<br>-->
@@ -67,8 +73,10 @@
         <a href="/login/logout">로그아웃</a>
         {{user.username}} 님이 로그인중
         {% else %}
-        <div>
-            <div style="display:flex; flex-direction: row">
+        <div class="login_box">
+
+            <h1>Social Login</h1>
+            <div class="login_box1" style="display:flex; flex-direction: row">
                 <div>
                     <a href="{% provider_login_url 'google' %}" class="btn btn-outline-dark" role="button"
                        aria-pressed="true"
@@ -90,6 +98,9 @@
         </div>
     </div>
 </div>
+    <br>
+
+{% endblock %}
 
 
 

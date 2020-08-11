@@ -40,10 +40,10 @@ def main(request):
 def add_one_to_cart(request, template_id):
     template = Powerpoint.objects.get(id=template_id)
     try:
-        cart = Cart.objects.get(cart_id=request.user.username)
+        cart = Cart.objects.get(cart_id=request.user.id)
     except Cart.DoesNotExist:
         cart = Cart.objects.create(
-            cart_id=request.user.username
+            cart_id=request.user.id
         )
         cart.save()
 
@@ -66,7 +66,7 @@ def add_one_to_cart(request, template_id):
 
 
 def show_cart_item(request):
-    user_cart = Cart.objects.get(cart_id=request.user.username)
+    user_cart = Cart.objects.get(cart_id=request.user.id)
     queryset = CartItem.objects.filter(cart=user_cart.id)
 
     context = {
@@ -78,7 +78,7 @@ def show_cart_item(request):
 
 def add_one_to_download_list(request, templates_id):
     templates = Powerpoint.objects.get(id=templates_id)
-    download, _ = Download_List.objects.get_or_create(user_id=request.user.id)
+    download, _ = DownloadList.objects.get_or_create(user_id=request.user.id)
     # try:
     #     download = Download_List.objects.get(download_id=request.user.username)
     # except Download_List.DoesNotExist:
@@ -87,7 +87,7 @@ def add_one_to_download_list(request, templates_id):
     #     )
     #     download.save()
 
-    Download_Item.objects.create(
+    DownloadItem.objects.create(
         templates=templates,
         download=download,
     )
@@ -101,7 +101,7 @@ def add_one_to_download_list(request, templates_id):
 
 
 def show_download_list(request):
-    queryset = Download_Item.objects.all()
+    queryset = DownloadItem.objects.all()
     # 이름 변경??
     contexts = {
         "object_list": queryset,
