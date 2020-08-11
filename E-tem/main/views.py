@@ -47,22 +47,22 @@ def add_one_to_cart(request, template_id):
         )
         cart.save()
 
-    cart_item, is_created = CartItem.objects.get_or_create(
-        template=template,
-        cart=cart,
-    )
-    return redirect('main')
-    # try:
-    #
-    #     cart_item = CartItem.objects.create(
-    #         template=template,
-    #         cart=cart,
-    #     )
-    #     cart_item.save()
-    #     return redirect('main')
-    #
-    # except IntegrityError:
-    #     return redirect('main')
+    # cart_item, is_created = CartItem.objects.get_or_create(
+    #     template=template,
+    #     cart=cart,
+    # )
+    # return redirect('main')
+    try:
+
+        cart_item = CartItem.objects.create(
+            template=template,
+            cart=cart,
+        )
+        cart_item.save()
+        return redirect('main')
+
+    except IntegrityError:
+        return redirect('main')
 
 
 def show_cart_item(request):
@@ -78,14 +78,16 @@ def show_cart_item(request):
 
 def add_one_to_download_list(request, templates_id):
     templates = Powerpoint.objects.get(id=templates_id)
-    download, _ = DownloadList.objects.get_or_create(user_id=request.user.id)
-    # try:
-    #     download = Download_List.objects.get(download_id=request.user.username)
-    # except Download_List.DoesNotExist:
-    #     download = Download_List.objects.create(
-    #         download_id=request.user.username
-    #     )
-    #     download.save()
+
+    # download, _ = DownloadList.objects.get_or_create(user_num=request.user.id)
+
+    try:
+        download = DownloadList.objects.get(user_id=request.user.id)
+    except DownloadList.DoesNotExist:
+        download = DownloadList.objects.create(
+            user_id=request.user.id
+        )
+        download.save()
 
     DownloadItem.objects.create(
         templates=templates,

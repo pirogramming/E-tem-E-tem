@@ -19,7 +19,7 @@ class Powerpoint(models.Model):
 class Cart(models.Model):
     # cart_id = models.CharField(max_length=100, blank=True)
     cart_id = models.IntegerField()
-    user_num = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    user_num = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     # ppt_cart = models.ManyToManyField(Powerpoint)
 
     def __str__(self):
@@ -38,7 +38,7 @@ class CartItem(models.Model):
 
 
 class Recent(models.Model):
-    user_num = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    user_num = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     recent_id = models.IntegerField()
     # recent_id = models.CharField(max_length=100, blank=True)
 
@@ -56,8 +56,8 @@ class RecentItem(models.Model):
 
 class DownloadList(models.Model):
     # download_id = models.CharField(max_length=100, blank=True)
-    user_id = models.IntegerField()
-    user_num = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    user_id = models.IntegerField(null=True)
+    user_num = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.user_id

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    {% for ppt in object_list %}
+    {% for ppt in cart_items %}
     <div class="col-md-4">
         <div class="card mb-4 shadow-sm">
             <a href={{ ppt.template.detail_page }} target="_blank">
