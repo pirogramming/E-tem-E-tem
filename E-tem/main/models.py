@@ -76,8 +76,8 @@ class ColorTag(models.Model):
 
 
 class PPT_tag(models.Model):
-    template = models.ForeignKey(Powerpoint, on_delete=models.CASCADE)
-    ppt_tag = models.ForeignKey(ColorTag, on_delete=models.CASCADE)
+    template = models.ForeignKey(Powerpoint, on_delete=models.CASCADE, null=True)
+    ppt_tag = models.ForeignKey(ColorTag, on_delete=models.CASCADE , null=True)
 
 
 class Myinfo(models.Model):
