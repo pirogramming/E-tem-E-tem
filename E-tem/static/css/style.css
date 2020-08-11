@@ -24,5 +24,10 @@
 footer {
     height: 100px;
 
-   background:pink;
+    background: pink;
+}
+
+
+.before_login {
+    height: 150px;
 }

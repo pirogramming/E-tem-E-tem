@@ -8,6 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import math
 from django.contrib.auth.decorators import login_required
 
+
 from django.db import IntegrityError
 from django.contrib import messages
 
@@ -73,6 +74,7 @@ def show_cart_item(request):
     return render(request, "main/cart.html", context)
 
 
+@login_required
 def add_one_to_download_list(request, templates_id):
     templates = Powerpoint.objects.get(id=templates_id)
 
@@ -99,6 +101,7 @@ def add_one_to_download_list(request, templates_id):
     return redirect(reverse(download_count, kwargs={'template_id': templates_id}))
 
 
+@login_required
 def show_download_list(request):
     user_download_list = DownloadList.objects.get(user_id=request.user.id)
     queryset = DownloadItem.objects.filter(download = user_download_list.id)
@@ -109,6 +112,7 @@ def show_download_list(request):
     return render(request, "main/download_list.html", contexts)
 
 
+@login_required
 def delete_cart_item(request, template_id):
     CartItem.objects.delete(id=template_id)
     return redirect('cart')
