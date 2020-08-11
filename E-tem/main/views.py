@@ -1,6 +1,6 @@
 import time
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from .models import *
 from django.urls import reverse
@@ -59,7 +59,7 @@ def add_one_to_cart(request, template_id):
         return HttpResponse("이미 장바구니에 존재하는 템플릿입니다.")
 
     print("******", is_created)
-    return redirect('main')
+    return JsonResponse({})
 
 
 @login_required
@@ -114,7 +114,7 @@ def show_download_list(request):
 
 @login_required
 def delete_cart_item(request, template_id):
-    CartItem.objects.delete(id=template_id)
+    CartItem.objects.get(id=template_id).delete()
     return redirect('cart')
 
 
@@ -141,7 +141,7 @@ def download_count(request, template_id):
     #     "count": count.counts,
     # }
 
-    return render(request, "main/showtop4.html")
+    return render(request, '', {'download': template.download_link})
 
 
 def myinfo(request):
