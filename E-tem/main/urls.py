@@ -1,11 +1,10 @@
 from django.contrib import admin
 from django.urls import path, include
 from .views import *
-from .views_main import *
 import login.views
 
 urlpatterns = [
-    path('', main_color, name='main'),
+    path('', main, name='main'),
     path('add/<int:template_id>/', add_one_to_cart, name="add_one_to_cart"),
     path('cart/', show_cart_item, name="cart"),
     path('adds/<int:templates_id>/', add_one_to_download_list, name="add_one_to_download_list"),

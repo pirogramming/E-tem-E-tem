@@ -41,6 +41,11 @@
         </button>
     </div>
     {% endif %}
+
+    {% for color in colorset %}
+        <a href="{% url 'color' color.id %}">{{ color.color }}</a>
+    {% endfor %}
+
     <div class="album py-5 bg-light">
 
         <div class="album py-5 bg-light">
