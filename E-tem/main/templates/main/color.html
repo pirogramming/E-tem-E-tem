@@ -41,12 +41,17 @@
         </button>
     </div>
     {% endif %}
+
+    {% for color in colorset %}
+        <a href="{% url 'color' color.id %}">{{ color.color }}</a>
+    {% endfor %}
+
     <div class="album py-5 bg-light">
 
         <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row">
-                    {% for ppt in template_list %}
+                    {% for ppt in ppt_items %}
                     <div class="col-md-4">
                         <div class="card mb-4 shadow-sm">
                             <a href="{{ ppt.detail_page }}" target="_blank">
