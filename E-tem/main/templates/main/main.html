@@ -216,6 +216,18 @@
                 padding: 5px 15px;
 
             }
+            .btn-group{
+                justify-content: space-around;
+                margin: 150px 130px;
+            }
+
+           #slider button{
+                 display: none;
+            }
+
+            .top5_ppt:hover  #slider button{
+                 display: block;
+            }
 
         </style>
     </head>
@@ -223,27 +235,30 @@
     <link href='https://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Neucha' rel='stylesheet' type='text/css'>
 
+  {% if user.is_authenticated %}
     <div id="wrapper">
 
         <div><h2 style="color: black">전체 인기 템플릿 TOP 5</h2></div>
-        <div id="slider-wrap">
-            <ul id="slider">
+        <div id="slider-wrap" class="top5_ppt">
+            <ul id="slider" class="top5_ppt">
 
                 {% for template in top5_template %}
                     <li>
-                        <div>
-                            {#                            <span> id : {{template.id}}</span>#}
+                        <img  src={{ template.img_src }}>
+                        <div class="btn-group" >
+                            <button type="button" class="btn btn-lg btn-secondary">
+                                <a data-id="{{ template.id }}" class="add_to_cart">장바구니 담기</a>
+                            </button>
+                            <button type="button" class="btn btn-lg btn-secondary">
+                                <a href="{% url 'add_one_to_download_list' template.id %}" name="download" style="color: white">개별 다운로드</a>
+                            </button>
                         </div>
-                        <img src={{ template.img_src }}>
                     </li>
 
                 {% endfor %}
-
-
             </ul>
 
             <!--controls-->
-
             <div class="btns" id="next"><i class="fa fa-arrow-right"></i></div>
             <div class="btns" id="previous"><i class="fa fa-arrow-left"></i></div>
             <div id="counter"></div>
@@ -257,6 +272,7 @@
         </div>
 
     </div>
+    {% endif %}
 {% endblock %}
 
 
@@ -274,12 +290,14 @@
     <body>
     <main role="main">
         {% if not user.is_authenticated %}
-            <div class="d-flex justify-content-center before_login">
+            <div class="d-flex justify-content-center before_login" style="margin: 10px;">
                 <button type="button" class="btn btn-lg btn-outline-danger">
                     <a href="{% url 'loginhome' %}"> 이용하려면 로그인 해주세요 엣-헴! </a>
                 </button>
             </div>
         {% endif %}
+
+    {% if user.is_authenticated %}
         <main role="main">
 
             <section class=" text-center">
@@ -318,6 +336,7 @@
                     </a>
             </div>
         </div>
+    {% endif %}
 
         <div class="album py-5 bg-light">
 
@@ -330,6 +349,7 @@
                                     <a href="{{ ppt.detail_page }}" target="_blank">
                                         <img src={{ ppt.img_src }} height="200" width="350" style="align-items: center;">
                                     </a>
+                                    {% if user.is_authenticated %}
                                     <div class="btn-group " style=" justify-content: space-around; margin: 10px 0">
                                         <button type="button" class="btn btn-sm btn-outline-secondary ">
                                             <a data-id="{{ ppt.id }}" class="add_to_cart">장바구니 담기</a>
@@ -342,6 +362,7 @@
                                         </button>
                                         <!--                            </form>-->
                                     </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         {% endfor %}
@@ -397,6 +418,9 @@
                     dataType: "json",
                     success: function (data) {
                         alert("담겼습니다.");
+                    };
+                    error: function (data) {
+                        alert('안담김')
                     }
                 })
             })

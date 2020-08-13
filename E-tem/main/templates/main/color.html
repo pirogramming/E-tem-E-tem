@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 
-
 {% block head_show %}
     <head>
         <style>
@@ -204,16 +203,28 @@
                 transition: all 0.3s cubic-bezier(1, .01, .32, 1);
             }
 
-            .color_select{
+            .color_select {
                 display: flex;
-
                 justify-content: space-around;
                 align-content: center;
             }
-            .color_select a{
+
+            .color_select a {
                 font-size: 2em;
                 padding: 5px 15px;
 
+            }
+            .btn-group{
+                justify-content: space-around;
+                margin: 150px 130px;
+            }
+
+           #slider button{
+                 display: none;
+            }
+
+            .top5_ppt:hover  #slider button{
+                 display: block;
             }
 
         </style>
@@ -221,26 +232,27 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Neucha' rel='stylesheet' type='text/css'>
-
+{% if user.is_authenticated %}
     <div id="wrapper">
 
-           <div> <h2 style="color: black">전체 인기 템플릿 TOP 5</h2></div>
-        <div id="slider-wrap">
-            <ul id="slider">
+        <div><h2 style="color: black">전체 인기 템플릿 TOP 5</h2></div>
+        <div id="slider-wrap" class="top5_ppt">
+            <ul id="slider" class="top5_ppt">
 
                 {% for template in top5_template %}
                     <li>
-
-                        <div>
-
-{#                            <span> id : {{template.id}}</span>#}
+                        <img  src={{ template.img_src }}>
+                        <div class="btn-group" >
+                            <button type="button" class="btn btn-lg btn-secondary">
+                                <a data-id="{{ template.id }}" class="add_to_cart">장바구니 담기</a>
+                            </button>
+                            <button type="button" class="btn btn-lg btn-secondary">
+                                <a href="{% url 'add_one_to_download_list' template.id %}" name="download" style="color: white">개별 다운로드</a>
+                            </button>
                         </div>
-                        <img src={{ template.img_src }}>
                     </li>
 
                 {% endfor %}
-
-
             </ul>
 
             <!--controls-->
@@ -257,6 +269,7 @@
         </div>
 
     </div>
+    {% endif %}
 {% endblock %}
 
 
@@ -281,28 +294,28 @@
             </div>
         {% endif %}
 
-    <div class="color_select ">
+        <div class="color_select ">
 
-    <a href="{% url 'main' %}">&#127968;</a>
-    <a href="{% url 'color' 6 %}">🖤</a>
-    <a href="{% url 'color' 5 %}">🤍</a>
-    <a href="{% url 'color' 3 %}">❤️</a>
-    <a href="{% url 'color' 8 %}">🧡</a>
-    <a href="{% url 'color' 4 %}">💛</a>
-    <a href="{% url 'color' 2 %}">💚</a>
-    <a href="{% url 'color' 1 %}">💙</a>
-    <a href="{% url 'color' 7 %}">💜</a>
-    <a href="{% url 'color' 9 %}">💗</a>
-    <a href="{% url 'color' 11 %}">🤎</a>
-    <a href="{% url 'color' 12 %}">🌪</a>
-    <a href="{% url 'color' 10 %}">&#127752;</a>
-    </div>
-            <div style="position: relative; float: right; width: 80px; height: 80px">
+            <a href="{% url 'main' %}">&#127968;</a>
+            <a href="{% url 'color' 6 %}">🖤</a>
+            <a href="{% url 'color' 5 %}">🤍</a>
+            <a href="{% url 'color' 3 %}">❤️</a>
+            <a href="{% url 'color' 8 %}">🧡</a>
+            <a href="{% url 'color' 4 %}">💛</a>
+            <a href="{% url 'color' 2 %}">💚</a>
+            <a href="{% url 'color' 1 %}">💙</a>
+            <a href="{% url 'color' 7 %}">💜</a>
+            <a href="{% url 'color' 9 %}">💗</a>
+            <a href="{% url 'color' 11 %}">🤎</a>
+            <a href="{% url 'color' 12 %}">🌪</a>
+            <a href="{% url 'color' 10 %}">&#127752;</a>
+        </div>
+        <div style="position: relative; float: right; width: 80px; height: 80px">
             <div id="cartscroll" style="position:absolute;top:0px;right: 5%; z-index: 999">
                 <a href="{% url 'cart' %}">
-                <img src="https://icon-library.net/images/free-shopping-cart-icon/free-shopping-cart-icon-3.jpg"
-                     style="width: 80px; height: 80px; border-radius: 50%; "/>
-                    </a>
+                    <img src="https://icon-library.net/images/free-shopping-cart-icon/free-shopping-cart-icon-3.jpg"
+                         style="width: 80px; height: 80px; border-radius: 50%; "/>
+                </a>
             </div>
         </div>
 
@@ -316,15 +329,16 @@
                             <div class="col-lg-4  ">
                                 <div class="card mb-4 shadow-sm col-lg-12" style="text-align: center;">
                                     <a href="{{ ppt.detail_page }}" target="_blank">
-                                        <img src={{ ppt.img_src }} height="200" width="350" style="align-items: center;">
+                                        <img src={{ ppt.img_src }} height="200" width="350"
+                                             style="align-items: center;">
                                     </a>
 
                                     <div class="btn-group " style=" justify-content: space-around; margin: 10px 0">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">
                                             <a data-id="{{ ppt.id }}" class="add_to_cart">장바구니 담기</a>
                                         </button>
-{#                                        <!--                            <form action="/count/{{ppt.id}}/" method="post">-->#}
-{#                                        <!--                                {% csrf_token %}-->#}
+                                        {#                                        <!--                            <form action="/count/{{ppt.id}}/" method="post">-->#}
+                                        {#                                        <!--                                {% csrf_token %}-->#}
                                         <button type="button" class="btn btn-sm btn-outline-secondary">
                                             <a href="{% url 'add_one_to_download_list' ppt.id %}" name="download">개별
                                                 다운로드</a>
@@ -342,12 +356,14 @@
                             {% endif %}
 
                             {% if template_list.number > 5 %}
-                                <li class="page-item "><a href="?page={{ previous_block }}" class="page-link">이전</a></li>
+                                <li class="page-item "><a href="?page={{ previous_block }}"
+                                                          class="page-link">이전</a></li>
                             {% endif %}
 
                             {% for i in p_range %}
                                 {% if template_list.number == i %}
-                                    <li class="page-item active"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+                                    <li class="page-item active"><a href="?page={{ i }}"
+                                                                    class="page-link">{{ i }}</a></li>
                                 {% else %}
                                     <li class="page-item "><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
                                 {% endif %}
@@ -392,10 +408,9 @@
     </script>
 
     <script>
-      $(window).scroll(function ()
-            {
-                $('#cartscroll').animate({top:$(window).scrollTop()+"px"},{queue:false, duration:100});
-            });
+        $(window).scroll(function () {
+            $('#cartscroll').animate({top: $(window).scrollTop() + "px"}, {queue: false, duration: 100});
+        });
 
     </script>
     <script>
