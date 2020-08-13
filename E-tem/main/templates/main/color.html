@@ -204,6 +204,18 @@
                 transition: all 0.3s cubic-bezier(1, .01, .32, 1);
             }
 
+            .color_select{
+                display: flex;
+
+                justify-content: space-around;
+                align-content: center;
+            }
+            .color_select a{
+                font-size: 2em;
+                padding: 5px 15px;
+
+            }
+
         </style>
     </head>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
@@ -211,13 +223,16 @@
     <link href='https://fonts.googleapis.com/css?family=Neucha' rel='stylesheet' type='text/css'>
 
     <div id="wrapper">
+
+           <div> <h2 style="color: black">전체 인기 템플릿 TOP 5</h2></div>
         <div id="slider-wrap">
             <ul id="slider">
 
                 {% for template in top5_template %}
                     <li>
+
                         <div>
-                            <h3>인기 템플릿</h3>
+
 {#                            <span> id : {{template.id}}</span>#}
                         </div>
                         <img src={{ template.img_src }}>
@@ -266,9 +281,31 @@
             </div>
         {% endif %}
 
-        {% for color in colorset %}
-            <a href="{% url 'color' color.id %}">{{ color.color }}</a>
-        {% endfor %}
+    <div class="color_select ">
+
+    <a href="{% url 'main' %}">&#127968;</a>
+    <a href="{% url 'color' 6 %}">🖤</a>
+    <a href="{% url 'color' 5 %}">🤍</a>
+    <a href="{% url 'color' 3 %}">❤️</a>
+    <a href="{% url 'color' 8 %}">🧡</a>
+    <a href="{% url 'color' 4 %}">💛</a>
+    <a href="{% url 'color' 2 %}">💚</a>
+    <a href="{% url 'color' 1 %}">💙</a>
+    <a href="{% url 'color' 7 %}">💜</a>
+    <a href="{% url 'color' 9 %}">💗</a>
+    <a href="{% url 'color' 11 %}">🤎</a>
+    <a href="{% url 'color' 12 %}">🌪</a>
+    <a href="{% url 'color' 10 %}">&#127752;</a>
+    </div>
+            <div style="position: relative; float: right; width: 80px; height: 80px">
+            <div id="cartscroll" style="position:absolute;top:0px;right: 5%; z-index: 999">
+                <a href="{% url 'cart' %}">
+                <img src="https://icon-library.net/images/free-shopping-cart-icon/free-shopping-cart-icon-3.jpg"
+                     style="width: 80px; height: 80px; border-radius: 50%; "/>
+                    </a>
+            </div>
+        </div>
+
 
         <div class="album py-5 bg-light">
 
@@ -276,12 +313,13 @@
                 <div class="container">
                     <div class="row">
                         {% for ppt in template_list %}
-                            <div class="col-md-4">
-                                <div class="card mb-4 shadow-sm">
+                            <div class="col-lg-4  ">
+                                <div class="card mb-4 shadow-sm col-lg-12" style="text-align: center;">
                                     <a href="{{ ppt.detail_page }}" target="_blank">
-                                        <img src={{ ppt.img_src }} height="200" width="350" style="align-items: center">
+                                        <img src={{ ppt.img_src }} height="200" width="350" style="align-items: center;">
                                     </a>
-                                    <div class="btn-group">
+
+                                    <div class="btn-group " style=" justify-content: space-around; margin: 10px 0">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">
                                             <a data-id="{{ ppt.id }}" class="add_to_cart">장바구니 담기</a>
                                         </button>
@@ -353,6 +391,13 @@
 
     </script>
 
+    <script>
+      $(window).scroll(function ()
+            {
+                $('#cartscroll').animate({top:$(window).scrollTop()+"px"},{queue:false, duration:100});
+            });
+
+    </script>
     <script>
         //current position
         var pos = 0;
@@ -456,6 +501,8 @@
          ************************/
         function countSlides() {
             $('#counter').html(pos + 1 + ' / ' + totalSlides);
+
+            document.getElementById("counter").style.color = "black";
         }
 
         function pagination() {

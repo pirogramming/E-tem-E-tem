@@ -33,12 +33,21 @@ def main(request):
     p_range = paginator.page_range[start_block:end_block]
     previous_block = int(page) - 5
     next_block = int(page) + 5
+
+    template_ranking = Count.objects.all().order_by('-counts')
+    top5 = template_ranking[:5]
+    top5_template = []
+    for top5_count in top5:
+        top_ppt = Powerpoint.objects.get(id=top5_count.template_id)
+        top5_template.append(top_ppt)
+
     return render(request, 'main/main.html', {
         'template_list': template_list,
         'colorset': colorset,
         'p_range': p_range,
         'previous_block': previous_block,
         'next_block': next_block,
+        'top5_template': top5_template,
     })
 
 
