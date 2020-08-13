@@ -2,77 +2,302 @@
 
 
 {% block head_show %}
-<main role="main">
+    <head>
+        <style>
+            /*GLOBALS*/
+            * {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
 
-    <section class="jumbotron text-center">
+            a {
+                text-decoration: none;
+                color: #666;
+            }
 
-        <div class="container">
-            <h1> E-tem E-tem </h1>
-            <p class="lead">안녕하세요. 저희는 남이 만든 템플릿을 무단으로 가져와서 팀 프로젝트 꿀 빠려고 하는 엣헴엣헴 입니다.
-                팀 이름은 펭수의 유행어를 무단으로 가져왔습니다. 전체적인 프론트는 부트스트랩 사이트에서 무단으로 가져와 사용중입니다. 후원 부탁드립니다.</p>
-            <p>
-                <a href="#" class="btn btn-primary my-2">기프티콘 전송</a>
-                <a href="#" class="btn btn-secondary my-2">입금 하기</a>
-            </p>
+            a:hover {
+                color: #1bc1a3;
+            }
+
+            body, hmtl {
+                background: #ecf0f1;
+                font-family: 'Anton', sans-serif;
+            }
+
+
+            #wrapper {
+                width: 600px;
+                margin: 50px auto;
+                height: 400px;
+                position: relative;
+                color: #fff;
+                text-shadow: rgba(0, 0, 0, 0.1) 2px 2px 0px;
+            }
+
+            #slider-wrap {
+                width: 600px;
+                height: 400px;
+                position: relative;
+                overflow: hidden;
+            }
+
+            #slider-wrap ul#slider {
+                width: 100%;
+                height: 100%;
+
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
+            #slider-wrap ul#slider li {
+                float: left;
+                position: relative;
+                width: 600px;
+                height: 400px;
+            }
+
+            #slider-wrap ul#slider li > div {
+                position: absolute;
+                top: 20px;
+                left: 35px;
+            }
+
+            #slider-wrap ul#slider li > div h3 {
+                font-size: 36px;
+                text-transform: uppercase;
+            }
+
+            #slider-wrap ul#slider li > div span {
+                font-family: Neucha, Arial, sans serif;
+                font-size: 21px;
+            }
+
+            #slider-wrap ul#slider li img {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+
+
+            /*btns*/
+            .btns {
+                position: absolute;
+                width: 50px;
+                height: 60px;
+                top: 50%;
+                margin-top: -25px;
+                line-height: 57px;
+                text-align: center;
+                cursor: pointer;
+                background: rgba(0, 0, 0, 0.1);
+                z-index: 100;
+
+
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -khtml-user-select: none;
+                -ms-user-select: none;
+
+                -webkit-transition: all 0.1s ease;
+                -moz-transition: all 0.1s ease;
+                -o-transition: all 0.1s ease;
+                -ms-transition: all 0.1s ease;
+                transition: all 0.1s ease;
+            }
+
+            .btns:hover {
+                background: rgba(0, 0, 0, 0.3);
+            }
+
+            #next {
+                right: -50px;
+                border-radius: 7px 0px 0px 7px;
+            }
+
+            #previous {
+                left: -50px;
+                border-radius: 0px 7px 7px 7px;
+            }
+
+            #counter {
+                top: 30px;
+                right: 35px;
+                width: auto;
+                position: absolute;
+            }
+
+            #slider-wrap.active #next {
+                right: 0px;
+            }
+
+            #slider-wrap.active #previous {
+                left: 0px;
+            }
+
+
+            /*bar*/
+            #pagination-wrap {
+                min-width: 20px;
+                margin-top: 350px;
+                margin-left: auto;
+                margin-right: auto;
+                height: 15px;
+                position: relative;
+                text-align: center;
+            }
+
+            #pagination-wrap ul {
+                width: 100%;
+            }
+
+            #pagination-wrap ul li {
+                margin: 0 4px;
+                display: inline-block;
+                width: 5px;
+                height: 5px;
+                border-radius: 50%;
+                background: #fff;
+                opacity: 0.5;
+                position: relative;
+                top: 0;
+
+
+            }
+
+            #pagination-wrap ul li.active {
+                width: 12px;
+                height: 12px;
+                top: 3px;
+                opacity: 1;
+                box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 0px;
+            }
+
+
+            /*Header*/
+            h1, h2 {
+                text-shadow: none;
+                text-align: center;
+            }
+
+            h1 {
+                color: #666;
+                text-transform: uppercase;
+                font-size: 36px;
+            }
+
+            h2 {
+                color: #7f8c8d;
+                font-family: Neucha, Arial, sans serif;
+                font-size: 18px;
+                margin-bottom: 30px;
+            }
+
+
+            /*ANIMATION*/
+            #slider-wrap ul, #pagination-wrap ul li {
+                -webkit-transition: all 0.3s cubic-bezier(1, .01, .32, 1);
+                -moz-transition: all 0.3s cubic-bezier(1, .01, .32, 1);
+                -o-transition: all 0.3s cubic-bezier(1, .01, .32, 1);
+                -ms-transition: all 0.3s cubic-bezier(1, .01, .32, 1);
+                transition: all 0.3s cubic-bezier(1, .01, .32, 1);
+            }
+
+        </style>
+    </head>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Neucha' rel='stylesheet' type='text/css'>
+
+    <div id="wrapper">
+        <div id="slider-wrap">
+            <ul id="slider">
+
+                {% for template in top5_template %}
+                    <li>
+                        <div>
+                            <h3>인기 템플릿</h3>
+{#                            <span> id : {{template.id}}</span>#}
+                        </div>
+                        <img src={{ template.img_src }}>
+                    </li>
+
+                {% endfor %}
+
+
+            </ul>
+
+            <!--controls-->
+            <div class="btns" id="next"><i class="fa fa-arrow-right"></i></div>
+            <div class="btns" id="previous"><i class="fa fa-arrow-left"></i></div>
+            <div id="counter"></div>
+
+            <div id="pagination-wrap">
+                <ul>
+                </ul>
+            </div>
+            <!--controls-->
+
         </div>
-    </section>
-    <!--여기까지 상단 부분-->
-</main>
+
+    </div>
 {% endblock %}
 
 
 {% block content %}
-<head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <style>
-                a {
-                    text-decoration: none;
-                    color: #6c757d;
-                }
-    </style>
-</head>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <style>
+            a {
+                text-decoration: none;
+                color: #6c757d;
+            }
+        </style>
+    </head>
 
-<body>
-<main role="main">
-    {% if not user.is_authenticated %}
-    <div class="d-flex justify-content-center before_login">
-        <button type="button" class="btn btn-lg btn-outline-danger">
-            <a href="{% url 'loginhome' %}"> 이용하려면 로그인 해주세요 엣-헴! </a>
-        </button>
-    </div>
-    {% endif %}
+    <body>
+    <main role="main">
+        {% if not user.is_authenticated %}
+            <div class="d-flex justify-content-center before_login">
+                <button type="button" class="btn btn-lg btn-outline-danger">
+                    <a href="{% url 'loginhome' %}"> 이용하려면 로그인 해주세요 엣-헴! </a>
+                </button>
+            </div>
+        {% endif %}
 
-    {% for color in colorset %}
-        <a href="{% url 'color' color.id %}">{{ color.color }}</a>
-    {% endfor %}
-
-    <div class="album py-5 bg-light">
+        {% for color in colorset %}
+            <a href="{% url 'color' color.id %}">{{ color.color }}</a>
+        {% endfor %}
 
         <div class="album py-5 bg-light">
-            <div class="container">
-                <div class="row">
-                    {% for ppt in template_list %}
-                    <div class="col-md-4">
-                        <div class="card mb-4 shadow-sm">
-                            <a href="{{ ppt.detail_page }}" target="_blank">
-                                <img src={{ ppt.img_src }} height="200" width="350" style="align-items: center">
-                            </a>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">
-                                    <a data-id="{{ ppt.id }}" class="add_to_cart">장바구니 담기</a>
-                                </button>
-                                <!--                            <form action="/count/{{ppt.id}}/" method="post">-->
-                                <!--                                {% csrf_token %}-->
-                                <button type="button" class="btn btn-sm btn-outline-secondary">
-                                    <a href="{% url 'add_one_to_download_list' ppt.id %}" name="download">개별 다운로드</a>
-                                </button>
-                                <!--                            </form>-->
+
+            <div class="album py-5 bg-light">
+                <div class="container">
+                    <div class="row">
+                        {% for ppt in ppt_items %}
+                            <div class="col-md-4">
+                                <div class="card mb-4 shadow-sm">
+                                    <a href="{{ ppt.detail_page }}" target="_blank">
+                                        <img src={{ ppt.img_src }} height="200" width="350" style="align-items: center">
+                                    </a>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                            <a data-id="{{ ppt.id }}" class="add_to_cart">장바구니 담기</a>
+                                        </button>
+{#                                        <!--                            <form action="/count/{{ppt.id}}/" method="post">-->#}
+{#                                        <!--                                {% csrf_token %}-->#}
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                            <a href="{% url 'add_one_to_download_list' ppt.id %}" name="download">개별
+                                                다운로드</a>
+                                        </button>
+                                        <!--                            </form>-->
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
-                </div>
-                <div class="pagination ">
+                    <div class="pagination ">
                     <span class="d-flex ">
                         {% if template_list.has_previous %}
                             <li class="page-item "><a href="?page=1" class="page-link">&laquo; 첫 페이지</a></li>
@@ -94,23 +319,24 @@
                             <li class="page-item "><a href="?page={{ next_block }}" class="page-link">다음</a></li>
                         {% endif %}
                         {% if template_list.has_next %}
-                            <li class="page-item "><a href="?page={{ template_list.paginator.num_pages }}" class="page-link">마지막 페이지 &raquo;</a></li>
+                            <li class="page-item "><a href="?page={{ template_list.paginator.num_pages }}"
+                                                      class="page-link">마지막 페이지 &raquo;</a></li>
                         {% endif %}
 
                     </span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-</main>
+    </main>
 
-</body>
+    </body>
 
-<!--여기에 ajax로 장바구니 담기-->
-<script>
+    <!--여기에 ajax로 장바구니 담기-->
+    <script>
 
-$(document).ready(function () {
+        $(document).ready(function () {
             $('.add_to_cart').on('click', function () {
                 const templateId = $(this).attr('data-id')
                 $.ajax({
@@ -125,5 +351,116 @@ $(document).ready(function () {
             })
         });
 
-</script>
+    </script>
+
+    <script>
+        //current position
+        var pos = 0;
+        //number of slides
+        var totalSlides = $('#slider-wrap ul li').length;
+        //get the slide width
+        var sliderWidth = $('#slider-wrap').width();
+
+
+        $(document).ready(function () {
+
+
+            /*****************
+             BUILD THE SLIDER
+             *****************/
+            //set width to be 'x' times the number of slides
+            $('#slider-wrap ul#slider').width(sliderWidth * totalSlides);
+
+            //next slide
+            $('#next').click(function () {
+                slideRight();
+            });
+
+            //previous slide
+            $('#previous').click(function () {
+                slideLeft();
+            });
+
+
+            /*************************
+             //*> OPTIONAL SETTINGS
+             ************************/
+                //automatic slider
+            var autoSlider = setInterval(slideRight, 3000);
+
+            //for each slide
+            $.each($('#slider-wrap ul li'), function () {
+
+                //create a pagination
+                var li = document.createElement('li');
+                $('#pagination-wrap ul').append(li);
+            });
+
+            //counter
+            countSlides();
+
+            //pagination
+            pagination();
+
+            //hide/show controls/btns when hover
+            //pause automatic slide when hover
+            $('#slider-wrap').hover(
+                function () {
+                    $(this).addClass('active');
+                    clearInterval(autoSlider);
+                },
+                function () {
+                    $(this).removeClass('active');
+                    autoSlider = setInterval(slideRight, 3000);
+                }
+            );
+
+
+        });//DOCUMENT READY
+
+
+        /***********
+         SLIDE LEFT
+         ************/
+        function slideLeft() {
+            pos--;
+            if (pos == -1) {
+                pos = totalSlides - 1;
+            }
+            $('#slider-wrap ul#slider').css('left', -(sliderWidth * pos));
+
+            //*> optional
+            countSlides();
+            pagination();
+        }
+
+
+        /************
+         SLIDE RIGHT
+         *************/
+        function slideRight() {
+            pos++;
+            if (pos == totalSlides) {
+                pos = 0;
+            }
+            $('#slider-wrap ul#slider').css('left', -(sliderWidth * pos));
+
+            //*> optional
+            countSlides();
+            pagination();
+        }
+
+
+        /************************
+         //*> OPTIONAL SETTINGS
+         ************************/
+        function countSlides() {
+            $('#counter').html(pos + 1 + ' / ' + totalSlides);
+        }
+
+        function pagination() {
+            $('#pagination-wrap ul li').removeClass('active');
+            $('#pagination-wrap ul li:eq(' + pos + ')').addClass('active');
+        }
+    </script>
 {% endblock %}

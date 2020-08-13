@@ -64,12 +64,22 @@ def color(request, id):
     p_range = paginator.page_range[start_block:end_block]
     previous_block = int(page) - 5
     next_block = int(page) + 5
+
+    # ppt_list에 있는 ppt를 Count_template_id로 갖는 애들 get 한 다음에 order
+    template_ranking = Count.objects.all().order_by('-counts')
+    top5 = template_ranking[:5]
+    top5_template = []
+    for top5_count in top5:
+        top_ppt = Powerpoint.objects.get(id=top5_count.template_id)
+        top5_template.append(top_ppt)
+
     context = {
-        "template_list": template_list,
+        "ppt_items": template_list,
         "colorset": colorset,
         'p_range': p_range,
         'previous_block': previous_block,
         'next_block': next_block,
+        'top5_template': top5_template,
     }
     return render(request, "main/color.html", context)
 
