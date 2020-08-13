@@ -65,7 +65,7 @@ def color(request, id):
     previous_block = int(page) - 5
     next_block = int(page) + 5
     context = {
-        "ppt_items": template_list,
+        "template_list": template_list,
         "colorset": colorset,
         'p_range': p_range,
         'previous_block': previous_block,
