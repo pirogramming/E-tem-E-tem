@@ -46,6 +46,13 @@
         <a href="{% url 'color' color.id %}">{{ color.color }}</a>
     {% endfor %}
 
+    <div style="position: relative; float: right; width: 80px; height: 80px">
+        <div id="cartscroll" style="position:absolute;top:0px;right: 100px;">
+            <img src="https://icon-library.net/images/free-shopping-cart-icon/free-shopping-cart-icon-3.jpg" style="width: 80px; height: 80px;"/>
+        </div>
+    </div>
+
+
     <div class="album py-5 bg-light">
 
         <div class="album py-5 bg-light">
@@ -123,6 +130,11 @@ $(document).ready(function () {
                     }
                 })
             })
+
+            $(window).scroll(function ()
+            {
+                $('#cartscroll').animate({top:$(window).scrollTop()+"px"},{queue:false, duration:100});
+            });
         });
 
 </script>

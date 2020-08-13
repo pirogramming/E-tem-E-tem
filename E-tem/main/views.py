@@ -74,7 +74,7 @@ def color(request, id):
         top5_template.append(top_ppt)
 
     context = {
-        "ppt_items": template_list,
+        "template_list": template_list,
         "colorset": colorset,
         'p_range': p_range,
         'previous_block': previous_block,

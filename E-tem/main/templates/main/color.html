@@ -275,7 +275,7 @@
             <div class="album py-5 bg-light">
                 <div class="container">
                     <div class="row">
-                        {% for ppt in ppt_items %}
+                        {% for ppt in template_list %}
                             <div class="col-md-4">
                                 <div class="card mb-4 shadow-sm">
                                     <a href="{{ ppt.detail_page }}" target="_blank">
@@ -298,32 +298,32 @@
                         {% endfor %}
                     </div>
                     <div class="pagination ">
-                    <span class="d-flex ">
-                        {% if template_list.has_previous %}
-                            <li class="page-item "><a href="?page=1" class="page-link">&laquo; 첫 페이지</a></li>
-                        {% endif %}
-
-                        {% if template_list.number > 5 %}
-                            <li class="page-item "><a href="?page={{ previous_block }}" class="page-link">이전</a></li>
-                        {% endif %}
-
-                        {% for i in p_range %}
-                            {% if template_list.number == i %}
-                                <li class="page-item active"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
-                            {% else %}
-                                <li class="page-item "><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+                        <span class="d-flex ">
+                            {% if template_list.has_previous %}
+                                <li class="page-item "><a href="?page=1" class="page-link">&laquo; 첫 페이지</a></li>
                             {% endif %}
-                        {% endfor %}
 
-                        {% if template_list.number < template_list.paginator.num_pages %}
-                            <li class="page-item "><a href="?page={{ next_block }}" class="page-link">다음</a></li>
-                        {% endif %}
-                        {% if template_list.has_next %}
-                            <li class="page-item "><a href="?page={{ template_list.paginator.num_pages }}"
-                                                      class="page-link">마지막 페이지 &raquo;</a></li>
-                        {% endif %}
+                            {% if template_list.number > 5 %}
+                                <li class="page-item "><a href="?page={{ previous_block }}" class="page-link">이전</a></li>
+                            {% endif %}
 
-                    </span>
+                            {% for i in p_range %}
+                                {% if template_list.number == i %}
+                                    <li class="page-item active"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+                                {% else %}
+                                    <li class="page-item "><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if template_list.number < template_list.paginator.num_pages %}
+                                <li class="page-item "><a href="?page={{ next_block }}" class="page-link">다음</a></li>
+                            {% endif %}
+                            {% if template_list.has_next %}
+                                <li class="page-item "><a href="?page={{ template_list.paginator.num_pages }}"
+                                                          class="page-link">마지막 페이지 &raquo;</a></li>
+                            {% endif %}
+
+                        </span>
                     </div>
                 </div>
             </div>
