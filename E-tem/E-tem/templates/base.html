@@ -36,6 +36,15 @@
 
     </div>
 </div>
+
+<div style="position: relative; float: right; width: 80px; height: 80px">
+    <div id="cartscroll" style="position:absolute;top:0px;right: 100px;">
+        <a href="{% url 'cart' %}"><img src="https://icon-library.net/images/free-shopping-cart-icon/free-shopping-cart-icon-3.jpg"
+                                        style="width: 80px; height: 80px;"/></a>
+        <p id="carticon">{{quantity}}</p>
+    </div>
+</div>
+
 {% block head_show %}
 {% endblock %}
 

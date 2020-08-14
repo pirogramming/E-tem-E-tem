@@ -87,24 +87,46 @@ def color(request, id):
 @login_required
 def add_one_to_cart(request, template_id):
     template = Powerpoint.objects.get(id=template_id)
+
+    #cart 객체 만들고 cart없으면 만드는 코드
     try:
         cart = Cart.objects.get(cart_id=request.user.id)
+
     except Cart.DoesNotExist:
         cart = Cart.objects.create(
-            cart_id=request.user.id
+            cart_id=request.user.id,
         )
-        cart.save()
 
     cart_item, is_created = CartItem.objects.get_or_create(
         template=template,
         cart=cart,
     )
 
+    count = len(CartItem.objects.all())
+    print(count)
+    cart.quantity = count
+    cart.save()
+
+    context = {
+        'quantity': cart.quantity,
+    }
+
     if not is_created:
         return HttpResponse("이미 장바구니에 존재하는 템플릿입니다.")
 
     print("******", is_created)
-    return JsonResponse({})
+
+    return JsonResponse(context)
+
+def show_cart_count(request):
+    cart = Cart.objects.get(cart_id=request.user.id)
+    cart_count = request.session.get('cart_count', cart.quantity)
+
+    context = {
+        'quantity': cart_count,
+    }
+
+    return render(request, 'base.html', context)
 
 
 @login_required
@@ -159,7 +181,15 @@ def show_download_list(request):
 
 @login_required
 def delete_cart_item(request, template_id):
+    cart = Cart.objects.get(cart_id=request.user.id)
+
     CartItem.objects.get(id=template_id).delete()
+
+    count = len(CartItem.objects.all())
+    print(count)
+    cart.quantity = count
+    cart.save()
+
     return redirect('cart')
 
 
