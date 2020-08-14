@@ -1,400 +1,200 @@
 {% extends 'base.html' %}
-
-
-{% block head_show %}
-    <head>
-        <style>
-            /*GLOBALS*/
-            * {
-                margin: 0;
-                padding: 0;
-                list-style: none;
-            }
-
-            a {
-                text-decoration: none;
-                color: #666;
-            }
-
-            a:hover {
-                color: #1bc1a3;
-            }
-
-            body, hmtl {
-                background: #ecf0f1;
-                font-family: 'Anton', sans-serif;
-            }
-
-
-            #wrapper {
-                width: 600px;
-                margin: 50px auto;
-                height: 400px;
-                position: relative;
-                color: #fff;
-                text-shadow: rgba(0, 0, 0, 0.1) 2px 2px 0px;
-            }
-
-            #slider-wrap {
-                width: 600px;
-                height: 400px;
-                position: relative;
-                overflow: hidden;
-            }
-
-            #slider-wrap ul#slider {
-                width: 100%;
-                height: 100%;
-
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
-
-            #slider-wrap ul#slider li {
-                float: left;
-                position: relative;
-                width: 600px;
-                height: 400px;
-            }
-
-            #slider-wrap ul#slider li > div {
-                position: absolute;
-                top: 20px;
-                left: 35px;
-            }
-
-            #slider-wrap ul#slider li > div h3 {
-                font-size: 36px;
-                text-transform: uppercase;
-            }
-
-            #slider-wrap ul#slider li > div span {
-                font-family: Neucha, Arial, sans serif;
-                font-size: 21px;
-            }
-
-            #slider-wrap ul#slider li img {
-                display: block;
-                width: 100%;
-                height: 100%;
-            }
-
-
-            /*btns*/
-            .btns {
-                position: absolute;
-                width: 50px;
-                height: 60px;
-                top: 50%;
-                margin-top: -25px;
-                line-height: 57px;
-                text-align: center;
-                cursor: pointer;
-                background: rgba(0, 0, 0, 0.1);
-                z-index: 100;
-
-
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -khtml-user-select: none;
-                -ms-user-select: none;
-
-                -webkit-transition: all 0.1s ease;
-                -moz-transition: all 0.1s ease;
-                -o-transition: all 0.1s ease;
-                -ms-transition: all 0.1s ease;
-                transition: all 0.1s ease;
-            }
-
-            .btns:hover {
-                background: rgba(0, 0, 0, 0.3);
-            }
-
-            #next {
-                right: -50px;
-                border-radius: 7px 0px 0px 7px;
-            }
-
-            #previous {
-                left: -50px;
-                border-radius: 0px 7px 7px 7px;
-            }
-
-            #counter {
-                top: 30px;
-                right: 35px;
-                width: auto;
-                position: absolute;
-            }
-
-            #slider-wrap.active #next {
-                right: 0px;
-            }
-
-            #slider-wrap.active #previous {
-                left: 0px;
-            }
-
-
-            /*bar*/
-            #pagination-wrap {
-                min-width: 20px;
-                margin-top: 350px;
-                margin-left: auto;
-                margin-right: auto;
-                height: 15px;
-                position: relative;
-                text-align: center;
-            }
-
-            #pagination-wrap ul {
-                width: 100%;
-            }
-
-            #pagination-wrap ul li {
-                margin: 0 4px;
-                display: inline-block;
-                width: 5px;
-                height: 5px;
-                border-radius: 50%;
-                background: #fff;
-                opacity: 0.5;
-                position: relative;
-                top: 0;
-
-
-            }
-
-            #pagination-wrap ul li.active {
-                width: 12px;
-                height: 12px;
-                top: 3px;
-                opacity: 1;
-                box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 0px;
-            }
-
-
-            /*Header*/
-            h1, h2 {
-                text-shadow: none;
-                text-align: center;
-            }
-
-            h1 {
-                color: #666;
-                text-transform: uppercase;
-                font-size: 36px;
-            }
-
-            h2 {
-                color: #7f8c8d;
-                font-family: Neucha, Arial, sans serif;
-                font-size: 18px;
-                margin-bottom: 30px;
-            }
-
-
-            /*ANIMATION*/
-            #slider-wrap ul, #pagination-wrap ul li {
-                -webkit-transition: all 0.3s cubic-bezier(1, .01, .32, 1);
-                -moz-transition: all 0.3s cubic-bezier(1, .01, .32, 1);
-                -o-transition: all 0.3s cubic-bezier(1, .01, .32, 1);
-                -ms-transition: all 0.3s cubic-bezier(1, .01, .32, 1);
-                transition: all 0.3s cubic-bezier(1, .01, .32, 1);
-            }
-
-            .color_select {
-                display: flex;
-
-                justify-content: space-around;
-                align-content: center;
-            }
-
-            .color_select a {
-                font-size: 2em;
-                padding: 5px 15px;
-
-            }
-            .btn-group{
-                justify-content: space-around;
-                margin: 150px 130px;
-            }
-
-           #slider button{
-                 display: none;
-            }
-
-            .top5_ppt:hover  #slider button{
-                 display: block;
-            }
-
-        </style>
-    </head>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Neucha' rel='stylesheet' type='text/css'>
-
-  {% if user.is_authenticated %}
-    <div id="wrapper">
-
-        <div><h2 style="color: black">전체 인기 템플릿 TOP 5</h2></div>
-        <div id="slider-wrap" class="top5_ppt">
-            <ul id="slider" class="top5_ppt">
-
-                {% for template in top5_template %}
-                    <li>
-                        <img  src={{ template.img_src }}>
-                        <div class="btn-group" >
-                            <button type="button" class="btn btn-lg btn-secondary">
-                                <a data-id="{{ template.id }}" class="add_to_cart">장바구니 담기</a>
-                            </button>
-                            <button type="button" class="btn btn-lg btn-secondary">
-                                <a href="{% url 'add_one_to_download_list' template.id %}" name="download" style="color: white">개별 다운로드</a>
-                            </button>
-                        </div>
-                    </li>
-
-                {% endfor %}
-            </ul>
-
-            <!--controls-->
-            <div class="btns" id="next"><i class="fa fa-arrow-right"></i></div>
-            <div class="btns" id="previous"><i class="fa fa-arrow-left"></i></div>
-            <div id="counter"></div>
-
-            <div id="pagination-wrap">
-                <ul>
-                </ul>
-            </div>
-            <!--controls-->
-
-        </div>
-
-    </div>
-    {% endif %}
-{% endblock %}
-
+{% load static %}
 
 {% block content %}
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-        <style>
-            a {
-                text-decoration: none;
-                color: #6c757d;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Lemonada:wght@700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Song+Myung&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@500;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
     </head>
 
     <body>
     <main role="main">
-        {% if not user.is_authenticated %}
-            <div class="d-flex justify-content-center before_login" style="margin: 10px;">
-                <button type="button" class="btn btn-lg btn-outline-danger">
-                    <a href="{% url 'loginhome' %}"> 이용하려면 로그인 해주세요 엣-헴! </a>
-                </button>
+        {% if user.is_authenticated %}
+        {% else %}
+            <div class="before_login_main">
+                <div class="big-text"><h1 class="display-2 pb-2"><span style="color: lightcoral">E</span>very <span
+                        style="color: lightcoral">Tem</span>plate
+                </h1>
+                    <button type="button" class="login_button">
+                        <a href="{% url 'loginhome' %}" style="text-decoration: none;color:black; ">DOWNLOAD NOW </a>
+                    </button>
+                </div>
+                <img class="main_background_img"
+                     src="https://post-phinf.pstatic.net/MjAyMDA0MjNfOCAg/MDAxNTg3NTg0NTY3Njky.FKxKOXFG7nIlVX9NDikM057o-xa2TfPeHYJ1NUO8wmIg.k2-yQEgz6k4lTXzbYZcI4b9zw8w3a09MprgGGBz08Ekg.JPEG/GettyImages-1194254554.jpg?type=w1200"/>
             </div>
         {% endif %}
 
-    {% if user.is_authenticated %}
-        <main role="main">
 
-            <section class=" text-center">
+        {% if not user.is_authenticated %}
+            <div class="show_top">
+            {% block head_show %}
+                <head>
+                    <link rel="stylesheet" type="text/css" href="{% static 'css/head_show.css' %}">
+                </head>
+                <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+                <link href='https://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
+                <link href='https://fonts.googleapis.com/css?family=Neucha' rel='stylesheet' type='text/css'>
 
-                <div class="container">
-                    {#                <h1> E-tem E-tem </h1>#}
-                    <h3>원하는 색을 선택하고 맘에 드는 템플릿을 골라보세요</h3>
-                    <p>
-                        {#                    <a href="#" class="btn btn-primary my-2">기프티콘 전송</a>#}
-                        {#                    <a href="#" class="btn btn-secondary my-2">입금 하기</a>#}
-                    </p>
+                <div class="top5_ppt_text"><h1>전체 인기 템플릿 <span style="color: lightcoral">TOP 5</span></h1></div>
+                {% if not user.is_authenticated %}
+                    <div class="wrapper" style="pointer-events: none;">
+                {% else %}
+                    <div class="wrapper">
+                {% endif %}
+            <div id="slider-wrap" class="top5_ppt">
+                <ul id="slider" class="top5_ppt">
+
+                    {% for template in top5_template %}
+                        <li>
+                            <img src={{ template.img_src }}>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-lg btn-secondary">
+                                    <a data-id="{{ template.id }}" class="add_to_cart">장바구니 담기</a>
+                                </button>
+                                <button type="button" class="btn btn-lg btn-secondary">
+                                    <a href="{% url 'add_one_to_download_list' template.id %}"
+                                       name="download"
+                                       style="color: white">개별 다운로드</a>
+                                </button>
+                            </div>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+
+                <!--controls-->
+                <div class="btns" id="next"><i class="fa fa-arrow-right"></i></div>
+                <div class="btns" id="previous"><i class="fa fa-arrow-left"></i></div>
+                <div id="counter"></div>
+
+                <div id="pagination-wrap">
+                    <ul>
+                    </ul>
                 </div>
-            </section>
-            <!—여기까지 상단 부분—>
-        </main>
-        <div class="color_select ">
-
-            <a href="{% url 'color' 6 %}">🖤</a>
-            <a href="{% url 'color' 5 %}">🤍</a>
-            <a href="{% url 'color' 3 %}">❤️</a>
-            <a href="{% url 'color' 8 %}">🧡</a>
-            <a href="{% url 'color' 4 %}">💛</a>
-            <a href="{% url 'color' 2 %}">💚</a>
-            <a href="{% url 'color' 1 %}">💙</a>
-            <a href="{% url 'color' 7 %}">💜</a>
-            <a href="{% url 'color' 9 %}">💗</a>
-            <a href="{% url 'color' 11 %}">🤎</a>
-            <a href="{% url 'color' 12 %}">🌪</a>
-            <a href="{% url 'color' 10 %}">&#127752;</a>
-        </div>
-        <div style="position: relative; float: right; width: 80px; height: 80px">
-            <div id="cartscroll" style="position:absolute;top:0px;right: 5%; z-index: 999">
-                <a href="{% url 'cart' %}">
-                <img src="https://icon-library.net/images/free-shopping-cart-icon/free-shopping-cart-icon-3.jpg"
-                     style="width: 80px; height: 80px; border-radius: 50%; "/>
-                    </a>
+                <!--controls-->
             </div>
+            </div>
+            {% endblock %}
         </div>
-    {% endif %}
+        {% endif %}
+
+        {% if not user.is_authenticated %}
+            <div class="etem_description"><p class="etem_description_p"><br>" 발표준비 할 때 PPT 만드느라 시간 다 쓰는 당신, 예쁜 PPT를 무료로
+                다운
+                받아보세요! "</p></div>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            <main role="main">
+                <section class=" text-center">
+                    <div class="container">
+                        <h3>원하는 색을 선택하고 맘에 드는 템플릿을 골라보세요</h3>
+                    </div>
+                </section>
+            </main>
+            <div class="color_select ">
+
+                <a href="{% url 'color' 6 %}">🖤</a>
+                <a href="{% url 'color' 5 %}">🤍</a>
+                <a href="{% url 'color' 3 %}">❤️</a>
+                <a href="{% url 'color' 8 %}">🧡</a>
+                <a href="{% url 'color' 4 %}">💛</a>
+                <a href="{% url 'color' 2 %}">💚</a>
+                <a href="{% url 'color' 1 %}">💙</a>
+                <a href="{% url 'color' 7 %}">💜</a>
+                <a href="{% url 'color' 9 %}">💗</a>
+                <a href="{% url 'color' 11 %}">🤎</a>
+                <a href="{% url 'color' 12 %}">🌪</a>
+                <a href="{% url 'color' 10 %}">&#127752;</a>
+            </div>
+            <div style="position: relative; float: right; width: 80px; height: 80px">
+                <div id="cartscroll" style="position:absolute;top:0px;right: 5%; z-index: 999">
+                    <a href="{% url 'cart' %}">
+                        <img src="https://icon-library.net/images/free-shopping-cart-icon/free-shopping-cart-icon-3.jpg"
+                             style="width: 80px; height: 80px; border-radius: 50%; "/>
+                    </a>
+                </div>
+            </div>
+        {% endif %}
 
         <div class="album py-5 bg-light">
-
             <div class="album py-5 bg-light">
                 <div class="container">
+
+                    {% if user.is_authenticated %}
+                    {% else %}
+                        <div class="previews_text"><span style="color: lightcoral"> E-tem</span> 이 제공하는 템플릿 미리보기</div>
+                    {% endif %}
+
                     <div class="row">
                         {% for ppt in template_list %}
-                             <div class="col-lg-4  ">
-                                <div class="card mb-4 shadow-sm col-lg-12" style="text-align: center;">
-                                    <a href="{{ ppt.detail_page }}" target="_blank">
-                                        <img src={{ ppt.img_src }} height="200" width="350" style="align-items: center;">
+                            <div class="col-lg-4" style="overflow: hidden">
+                                <div class="card mb-4 shadow-sm col-lg-12"
+                                     style="text-align: center; text-decoration: none">
+
+                                    {% if not user.is_authenticated %}
+                                        <img class="ppt_img" style="pointer-events: none;"
+                                             src={{ ppt.img_src }} height="200vh" width="350vw">
+                                    {% else %}
+                                        <a href="{{ ppt.detail_page }}" target="_blank"
+                                           style="text-decoration: none; color:black">
+                                        <img class="ppt_img" src={{ ppt.img_src }} height="200vh" width="350vw">
+                                        <p class="img_text" style="margin-top: -40px"><strong>View Page</strong></p>
+                                    {% endif %}
+
                                     </a>
+
                                     {% if user.is_authenticated %}
-                                    <div class="btn-group " style=" justify-content: space-around; margin: 10px 0">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary ">
-                                            <a data-id="{{ ppt.id }}" class="add_to_cart">장바구니 담기</a>
-                                        </button>
-                                        {#                                        <!--                            <form action="/count/{{ppt.id}}/" method="post">-->#}
-                                        {#                                        <!--                                {% csrf_token %}-->#}
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">
-                                            <a href="{% url 'add_one_to_download_list' ppt.id %}" name="download">개별
-                                                다운로드</a>
-                                        </button>
-                                        <!--                            </form>-->
-                                    </div>
+                                        <div class="btn-group " style=" justify-content: space-around; margin: 10px 0">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary ">
+                                                <a data-id="{{ ppt.id }}" class="add_to_cart">장바구니 담기</a>
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <a href="{% url 'add_one_to_download_list' ppt.id %}" name="download">개별
+                                                    다운로드</a>
+                                            </button>
+                                        </div>
                                     {% endif %}
                                 </div>
                             </div>
                         {% endfor %}
                     </div>
+
+
+                    <!--pagination-->
                     <div class="pagination ">
                         <span class="d-flex ">
                             {% if template_list.has_previous %}
-                                <li class="page-item "><a href="?page=1" class="page-link">&laquo; 첫 페이지</a></li>
+                                <li class="page-item"><a href="?page=1" class="page-link"  style="color: lightcoral">&laquo; 첫 페이지</a></li>
                             {% endif %}
 
                             {% if template_list.number > 5 %}
-                                <li class="page-item "><a href="?page={{ previous_block }}"
-                                                          class="page-link">이전</a></li>
+                                <li class="page-item"><a href="?page={{ previous_block }}"
+                                                          class="page-link"  style="color: lightcoral">이전</a></li>
                             {% endif %}
 
                             {% for i in p_range %}
                                 {% if template_list.number == i %}
                                     <li class="page-item active"><a href="?page={{ i }}"
-                                                                    class="page-link">{{ i }}</a></li>
+                                                                    class="page-link" style="background-color: lightcoral; color: white; border-color: lightcoral">{{ i }}</a></li>
                                 {% else %}
-                                    <li class="page-item "><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+                                    <li class="page-item "><a href="?page={{ i }}" class="page-link" style="color: lightcoral">{{ i }}</a></li>
                                 {% endif %}
                             {% endfor %}
 
                             {% if template_list.number < template_list.paginator.num_pages %}
-                                <li class="page-item "><a href="?page={{ next_block }}" class="page-link">다음</a></li>
+                                <li class="page-item "><a href="?page={{ next_block }}" class="page-link"  style="color: lightcoral">다음</a></li>
                             {% endif %}
                             {% if template_list.has_next %}
                                 <li class="page-item "><a href="?page={{ template_list.paginator.num_pages }}"
-                                                          class="page-link">마지막 페이지 &raquo;</a></li>
+                                                          class="page-link"  style="color: lightcoral">마지막 페이지 &raquo;</a></li>
                             {% endif %}
-
                         </span>
                     </div>
                 </div>
@@ -418,7 +218,7 @@
                     dataType: "json",
                     success: function (data) {
                         alert("담겼습니다.");
-                    };
+                    },
                     error: function (data) {
                         alert('안담김')
                     }
@@ -429,10 +229,9 @@
     </script>
 
     <script>
-      $(window).scroll(function ()
-            {
-                $('#cartscroll').animate({top:$(window).scrollTop()+"px"},{queue:false, duration:100});
-            });
+        $(window).scroll(function () {
+            $('#cartscroll').animate({top: $(window).scrollTop() + "px"}, {queue: false, duration: 100});
+        });
 
     </script>
 

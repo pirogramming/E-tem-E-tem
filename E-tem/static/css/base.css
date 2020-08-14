@@ -1,0 +1,81 @@
+body{
+    min-width: 500px;
+}
+.body{
+    min-width: 500px;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+.pagination {
+    justify-content: center;
+}
+
+
+
+footer {
+    height: 100px;
+    color: white;
+    background: black;
+}
+
+.before_login {
+    height: 150px;
+}
+
+.float-right{
+    margin-top: 35px;
+}
+
+.footer-p{
+    font-size: 20px;
+    padding-top: 25px;
+}
+
+.name{
+    font-size: 10px;
+    padding-left: 30px;
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.navbar-brand{
+  position: center;
+    text-align: center;
+}
+
+.navbar{
+    background-color: black;
+    z-index: 9999;
+    opacity: 0.5;
+    padding-top: 20px; !important;
+    padding-bottom: 20px; !important;
+}
+
+.login{
+    padding-right: 150px;
+    color: white;
+}
+
+.logo{
+    color: lightcoral;
+    padding-left: 100px;
+    font-size: 30px;
+}
+
+.logout{
+   padding-right: 150px;
+}

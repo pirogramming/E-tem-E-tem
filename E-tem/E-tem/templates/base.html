@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load static %}
 
 <html lang="en">
 <head>
@@ -14,42 +15,47 @@
             integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
             crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <meta name="theme-color" content="#563d7c">
 </head>
 
 <body>
-<div class="navbar navbar-dark bg-dark shadow-sm">
-    <div class="container d-flex justify-content-between">
-        <a href="{% url 'main' %}" class="navbar-brand d-flex align-items-center">
-            <strong>E-tem E-tem 신이나</strong>
-        </a>
 
-        {% if user.is_authenticated %}
-        <ul class = "nav_list">
-            <li class = "nav_item"><a href = "/allauth/logout "> 로그아웃 </a></li>
-            <li class = "nav_item"><a href="{% url 'mypage' %}">My page</a></li>
-        </ul>
-        {% else %}
-        <a href = "{% url 'loginhome' %}"> 로그인 </a>
-        {% endif %}
+<!--navbar-->
+<div class="navbar" style="opacity: 0.8; z-index: 9999; ">
+    <a href="{% url 'main' %}" class="navbar-brand">
+        <div class="logo" style="color: lightcoral; font-family: 'Lemonada', cursive"><strong>E-tem E-tem</strong></div>
+    </a>
 
-    </div>
+    {% if user.is_authenticated %}
+        <div class="logout">
+            <a href="{% url 'mypage' %}" style="color:#F6CED8; text-decoration: none">My page</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/allauth/logout " style="color:#F6CED8; text-decoration: none"> 로그아웃 </a>
+        </div>
+    {% else %}
+        <div class="login">
+            <a href="{% url 'loginhome' %}" style="color:#F6CED8; text-decoration: none"> 로그인 </a></div>
+    {% endif %}
+
 </div>
+
+{% if user.is_authenticated %}
 {% block head_show %}
 {% endblock %}
+{% endif %}
 
 
 {% block content %}
 {% endblock %}
-<!--푸터 -->
-<footer class=" text-muted " >
+
+<!--footer-->
+<footer class=" text-muted " style="opacity: 0.8; z-index: 9999;">
     <div class="container ">
         <p class="float-right ">
-            <a href="#">Back to top</a>
+            <a href="#" style="color: #6c757d; text-decoration: none;font-family: Noto Sans JP;">Back to top ▲</a>
         </p>
-        <p>&copy; E-tem E-tem  우리은행 1002-150-239818 후원 기다립니다.</p>
-
+        <p class="footer-p" style="font-family: Noto Sans JP;">&copy; Pirogramming-13th_E-tem-E-tem<br>
+        <span class="name">김하경, 손희우, 손영준, 최상윤, 신민지</span></p>
     </div>
 </footer>
 
