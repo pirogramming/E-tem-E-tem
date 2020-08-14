@@ -248,7 +248,7 @@
                         <a data-id="{{ template.id }}" class="add_to_cart">장바구니 담기</a>
                     </button>
                     <button type="button" class="btn btn-lg btn-secondary">
-                        <a data-name="{{ ppt.download_link }}" data-id="{{ ppt.id }}" class="add_to_download_list">개별
+                        <a data-name="{{ template.download_link }}" data-id="{{ template.id }}" class="add_to_download_list">개별
                             다운로드</a>
                     </button>
                 </div>
@@ -400,6 +400,9 @@
                 dataType: "json",
                 success: function (data) {
                     alert("담겼습니다.");
+                },
+                error: function (data) {
+                    alert('이미 담겨있는 PPT입니당!! 껄껄껄껄');
                 }
             })
         })
