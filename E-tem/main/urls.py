@@ -13,4 +13,5 @@ urlpatterns = [
     path('remove/<int:template_id>/', delete_cart_item, name="cart_item_delete"),
     path('count/<int:template_id>/', download_count, name="download_count"),
     path('color/<int:id>/', color, name="color"),
+    # path('show/', show_cart_count, name="show_cart_count"),
 ]

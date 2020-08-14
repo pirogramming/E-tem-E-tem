@@ -17,6 +17,13 @@ from django.contrib import messages
 
 
 def main(request):
+    if request.user.id:
+        cart = Cart.objects.get(cart_id=request.user.id)
+        cartitem = CartItem.objects.filter(cart=cart.id)
+        count = cartitem.count()
+    else:
+        count = 0
+
     queryset = Powerpoint.objects.all().order_by("id")
     colorset = ColorTag.objects.all()
     paginator = Paginator(queryset, 9)
@@ -39,7 +46,19 @@ def main(request):
         'p_range': p_range,
         'previous_block': previous_block,
         'next_block': next_block,
+        'cart_count': count,
     })
+
+# def show_cart_count(request):
+#     user_cart = Cart.objects.get(cart_id = request.user.id)
+#     user_count = CartItem.objects.filter(cart = user_cart.id)
+#     count = user_count.count()
+#
+#     context = {
+#         'cart_count': count,
+#     }
+#
+#     return render(request, 'main/main.html', context)
 
 
 def color(request, id):
@@ -101,8 +120,8 @@ def add_one_to_cart(request, template_id):
         template=template,
         cart=cart,
     )
-
-    count = len(CartItem.objects.all())
+    cartitems = CartItem.objects.filter(cart=cart.id)
+    count = cartitems.count()
     print(count)
     cart.quantity = count
     cart.save()
@@ -117,16 +136,6 @@ def add_one_to_cart(request, template_id):
     print("******", is_created)
 
     return JsonResponse(context)
-
-def show_cart_count(request):
-    cart = Cart.objects.get(cart_id=request.user.id)
-    cart_count = request.session.get('cart_count', cart.quantity)
-
-    context = {
-        'quantity': cart_count,
-    }
-
-    return render(request, 'base.html', context)
 
 
 @login_required
