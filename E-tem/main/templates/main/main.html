@@ -75,7 +75,8 @@
                                 <!--                            <form action="/count/{{ppt.id}}/" method="post">-->
                                 <!--                                {% csrf_token %}-->
                                 <button type="button" class="btn btn-sm btn-outline-secondary">
-                                    <a href="{% url 'add_one_to_download_list' ppt.id %}" name="download">개별 다운로드</a>
+                                    <a data-name="{{ ppt.download_link }}" data-id="{{ ppt.id }}" class="add_to_download_list">개별
+                            다운로드</a>
                                 </button>
                                 <!--                            </form>-->
                             </div>
@@ -136,11 +137,26 @@
                 })
             });
 
+            $('.add_to_download_list').on('click', function () {
+                const download_link = $(this).attr('data-name')
+                const templateId = $(this).attr('data-id')
+                console.log(download_link)
+                console.log(templateId)
+                $.ajax({
+                    type: 'GET',
+                    url: `/adds/${templateId}`,
+                    data: templateId,
+                    dataType: "json",
+                    success: function (data) {
+                        location.href = download_link;
+                    }
+                })
+            });
+
             $(window).scroll(function ()
             {
                 $('#cartscroll').animate({top:$(window).scrollTop()+"px"},{queue:false, duration:100});
             });
-
         });
 
 </script>

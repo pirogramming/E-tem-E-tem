@@ -220,12 +220,11 @@ def download_count(request, template_id):
             counts=1,
         )
 
-    # contexts = {
-    #     "download": count,
-    #     "count": count.counts,
-    # }
-
-    return render(request, '', {'download': template.download_link})
+    download_link = template.download_link
+    context = {
+        "download_link": download_link,
+    }
+    return JsonResponse({})
 
 
 def myinfo(request):
