@@ -137,6 +137,8 @@ LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/'
 
+ACCOUNT_LOGOUT_ON_GET= True
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
