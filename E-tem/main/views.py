@@ -18,6 +18,14 @@ from django.contrib import messages
 
 def main(request):
     if request.user.id:
+        #cart 비어있는 경우 로그인 시 오류나서 cart 만드는 코드가 이 부분에 있어야되니 지우지 말아주세요
+        try:
+            cart = Cart.objects.get(cart_id=request.user.id)
+        except Cart.DoesNotExist:
+            cart = Cart.objects.create(
+                cart_id=request.user.id
+            )
+            cart.save()
         cart = Cart.objects.get(cart_id=request.user.id)
         cartitem = CartItem.objects.filter(cart=cart.id)
         count = cartitem.count()

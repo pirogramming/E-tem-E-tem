@@ -285,13 +285,9 @@
                                         <button type="button" class="btn btn-sm btn-outline-secondary">
                                             <a data-id="{{ ppt.id }}" class="add_to_cart">장바구니 담기</a>
                                         </button>
-{#                                        <!--                            <form action="/count/{{ppt.id}}/" method="post">-->#}
-{#                                        <!--                                {% csrf_token %}-->#}
                                         <button type="button" class="btn btn-sm btn-outline-secondary">
-                                            <a href="{% url 'add_one_to_download_list' ppt.id %}" name="download">개별
-                                                다운로드</a>
+                                            <a data-name="{{ ppt.download_link }}" data-id="{{ ppt.id }}" class="add_to_download_list">개별 다운로드</a>
                                         </button>
-                                        <!--                            </form>-->
                                     </div>
                                 </div>
                             </div>
@@ -480,9 +476,7 @@
                         location.href = download_link;
                     }
                 })
-
             })
-
         });
     </script>
 {% endblock %}

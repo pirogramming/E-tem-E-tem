@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
+    {% if not cart_items %}
+        장바구니에 담긴 템플릿이 없습니다.
+    {% endif %}
+
     {% for ppt in cart_items %}
     <div class="col-md-4">
         <div class="card mb-4 shadow-sm">
@@ -11,7 +15,8 @@
                     <a href="{% url 'cart_item_delete' ppt.id %}" onclick="javascript:one_delete_success()">삭제</a>
                 </button>
                 <button type="button" class="btn btn-sm btn-outline-secondary">
-                    <a href="{{ ppt.template.download_link }}">다운로드</a>
+                    <a data-name="{{ ppt.template.download_link }}" data-id="{{ ppt.template.id }}" class="add_to_download_list">
+                        다운로드</a>
                 </button>
             </div>
         </div>
@@ -22,5 +27,26 @@
         function one_delete_success() {
             alert('템플릿 삭제.')
         }
+
+        //개별 다운로드 코드
+        $(document).ready(function () {
+        $('.add_to_download_list').on('click', function () {
+            const download_link = $(this).attr('data-name')
+            const templateId = $(this).attr('data-id')
+            console.log(download_link)
+            console.log(templateId)
+            $.ajax({
+                type: 'GET',
+                url: `/adds/${templateId}`,
+                data: templateId,
+                dataType: "json",
+                success: function (data) {
+                    console.log('success')
+                    location.href = download_link;
+                }
+            })
+        })
+    });
+
     </script>
 {% endblock %}
