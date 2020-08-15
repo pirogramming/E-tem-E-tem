@@ -1,0 +1,18 @@
+body{
+    background-color: #F6F5EF;
+}
+
+
+.login_box {
+    margin-top: 50%;
+  display: block;
+    justify-content: center;
+}
+
+.login_box1 {
+    margin-top: 150px;
+}
+
+.login_box h4 {
+    margin-top: 100px;
+}

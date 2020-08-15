@@ -20,42 +20,51 @@
 </head>
 
 <body>
-
-<!--navbar-->
-<div class="navbar" style="opacity: 0.8; z-index: 9999; ">
-    <a href="{% url 'main' %}" class="navbar-brand">
-        <div class="logo" style="color: lightcoral; font-family: 'Lemonada', cursive"><strong>E-tem E-tem</strong></div>
-    </a>
-
-    {% if user.is_authenticated %}
-        <div class="logout">
-            <a href="{% url 'mypage' %}" style="color:#F6CED8; text-decoration: none">My page</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="/allauth/logout " style="color:#F6CED8; text-decoration: none"> 로그아웃 </a>
+    <div class="navbar-after_login shadow-sm">
+        <div class="logo-after"><a href="{% url 'main' %}" class="navbar-brand" style="font-size: 40px">
+            E-tem E-tem
+        </a>
+            {% if user.is_authenticated %}
+            <div class="logout_join">
+                <a href="{% url 'mypage' %}" class="join">My page</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/allauth/logout " class="logout"> 로그아웃 </a>
+                <hr class="hr_nav">
+            </div>
+                {% else %}
+                 <div class="logout_join">
+                <a href="{% url 'loginhome' %}" class="logout"> 로그인 </a>
+                <hr class="hr_nav">
+            </div>
+                {% endif %}
+            <div class="color-tag">
+                <a href="{% url 'color' 6 %}" class="color">black</a>
+                <a href="{% url 'color' 5 %}" class="color">white</a>
+                <a href="{% url 'color' 3 %}" class="color">red</a>
+                <a href="{% url 'color' 8 %}" class="color">orange</a>
+                <a href="{% url 'color' 4 %}" class="color">yellow</a>
+                <a href="{% url 'color' 2 %}" class="color">green</a>
+                <a href="{% url 'color' 1 %}" class="color">blue</a>
+                <a href="{% url 'color' 7 %}" class="color">purple</a>
+                <a href="{% url 'color' 9 %}" class="color">pink</a>
+                <a href="{% url 'color' 11 %}" class="color">brown</a>
+                <a href="{% url 'color' 12 %}" class="color">gray</a>
+                <a href="{% url 'color' 10 %}" class="color">rainbow</a>
+            </div>
         </div>
-    {% else %}
-        <div class="login">
-            <a href="{% url 'loginhome' %}" style="color:#F6CED8; text-decoration: none"> 로그인 </a></div>
-    {% endif %}
-
-</div>
-
-{% if user.is_authenticated %}
-{% block head_show %}
-{% endblock %}
-{% endif %}
+    </div>
 
 
 {% block content %}
 {% endblock %}
 
 <!--footer-->
-<footer class=" text-muted " style="opacity: 0.8; z-index: 9999;">
-    <div class="container ">
+<footer class=" text-muted shadow " style="background-color: #ffffff">
+    <div class="container">
         <p class="float-right ">
-            <a href="#" style="color: #6c757d; text-decoration: none;font-family: Noto Sans JP;">Back to top ▲</a>
+            <a href="#" class="gototop">Back to top▲</a>
         </p>
-        <p class="footer-p" style="font-family: Noto Sans JP;">&copy; Pirogramming-13th_E-tem-E-tem<br>
-        <span class="name">김하경, 손희우, 손영준, 최상윤, 신민지</span></p>
+        <p class="footer-p" style="font-family: Noto Sans JP; color: black">&copy; Pirogramming-13th_E-tem-E-tem<br>
+            <span class="name" style="padding-top: 10px;">김하경, 손희우, 손영준, 최상윤, 신민지</span></p>
     </div>
 </footer>
 

@@ -1,72 +1,75 @@
 {% extends 'base.html' %}
 {% block content %}
 
+    <head>
+        <meta charset="utf-8">
+        <title>My Page</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Lemonada:wght@700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Song+Myung&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@500;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+              integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+              integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+              crossorigin="anonymous">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
+              id="bootstrap-css">
+        <title>My Page</title>
 
+        <style>
+            a:hover {
+                text-decoration: none;
+            }
+        </style>
+    </head>
 
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <title>My Page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-{#    <link rel="stylesheet" type="text/css" href="./css/login.css">#}
-{#    <link rel="stylesheet" type="text/css" href="./css/mypage.css">#}
-    <title>My Page</title>
-</head>
+    <body style="background-color: #F2F2F2;">
 
-<body>
-<div class="container">
-    <div th:replace="./common/topbar :: topbar"></div>
-    <div class="jumbotron">
+    <div style="height: 45%"></div>
 
+    <div class="container">
 
-        <header class="header">
-            <div class="header__header-column">
-                <h1 class="header__title">My Page</h1>
+        <div class="card-deck mb-3 text-center">
+
+            <div class="card mb-4 shadow-sm" style="padding-top: 5%; padding-bottom: 5%">
+                <a href="#" class="MyPage" style="color: black">
+                    <i class="fas fa-file-alt fa-2x"></i>
+                    <h4><br>사용방법</h4></a>
             </div>
-        </header>
-        <main class="MYPAGE">
-            <header class="MyPage__header">
-                <ul class="MyPage__header-list">
-                    <li class="MyPage__header-btn header-btn">
-            <span class="header-btn__icon">
-                <a href="{% url 'cart' %}" class="MyPage__header-link">
+
+            <div class="card mb-4 shadow-sm" style="padding-top: 5%; padding-bottom: 5%;">
+                <a href="{% url 'cart' %}" class="MyPage" style="color: black">
                     <i class="fas fa-shopping-basket fa-2x"></i>
-                </a>
-            </span>
-                        <span class="header-btn__title">
-              장바구니
-            </span>
-                    </li>
-                    <li class="MyPage__header-btn header-btn">
-            <span class="header-btn__icon">
-                <a href="{% url 'download_list' %}" class="MyPage__header-link">
-              <i class="fas fa-download fa-2x"></i>
-              </a>
-            </span>
-                        <span class="header-btn__title">
-              최근 다운받은 목록
-            </span>
+                    <h4><br>장바구니</h4></a>
+            </div>
 
-                    </li>
-                </ul>
-            </header>
-        </main>
+            <div class="card mb-4 shadow-sm" style="padding-top: 5%; padding-bottom: 5%">
+                <a href="{% url 'download_list' %}" class="MyPage" style="color: black">
+                    <i class="fas fa-download fa-2x"></i>
+
+                    <h4><br>최근 다운받은 목록</h4></a>
+            </div>
+        </div>
     </div>
-</div>
+
+    <div style="height: 20%"></div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+    {#<script src="./js/common.js"></script>#}
+    </body>
+    </html>
 
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
-{#<script src="./js/common.js"></script>#}
-</body>
-</html>
-
-
-{% endblock%}
+{% endblock %}
 
