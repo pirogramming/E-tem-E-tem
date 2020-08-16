@@ -32,7 +32,7 @@ def main(request):
     else:
         count = 0
 
-    queryset = Powerpoint.objects.all().order_by("id")
+    queryset = Powerpoint.objects.all().order_by("-download_count")
     colorset = ColorTag.objects.all()
     paginator = Paginator(queryset, 9)
     page = request.GET.get('page')
@@ -48,6 +48,9 @@ def main(request):
     p_range = paginator.page_range[start_block:end_block]
     previous_block = int(page) - 5
     next_block = int(page) + 5
+
+    top5_template = Powerpoint.objects.all().order_by("-download_count")[:5]
+
     return render(request, 'main/main.html', {
         'template_list': template_list,
         'colorset': colorset,
@@ -55,6 +58,7 @@ def main(request):
         'previous_block': previous_block,
         'next_block': next_block,
         'cart_count': count,
+        'top5_template': top5_template,
     })
 
 # def show_cart_count(request):
@@ -74,8 +78,9 @@ def color(request, id):
     tag_list = PPT_tag.objects.filter(ppt_tag_id=id)
     ppt_list = []
     for tag in tag_list:
-        ppt = Powerpoint.objects.get(id=tag.template_id)
-        ppt_list.append(ppt)
+        ppt = Powerpoint.objects.filter(id=tag.template_id)
+        ppt_list += ppt
+    ppt_list = sorted(ppt_list, key=lambda tem: (tem.download_count), reverse=True)
     # ppt_list = tag_list.powerpoint.all()
     paginator = Paginator(ppt_list, 9)
     page = request.GET.get('page')
@@ -93,12 +98,16 @@ def color(request, id):
     next_block = int(page) + 5
 
     # ppt_list에 있는 ppt를 Count_template_id로 갖는 애들 get 한 다음에 order
-    template_ranking = Count.objects.all().order_by('-counts')
-    top5 = template_ranking[:5]
-    top5_template = []
-    for top5_count in top5:
-        top_ppt = Powerpoint.objects.get(id=top5_count.template_id)
-        top5_template.append(top_ppt)
+    # template_ranking = Count.objects.all().order_by('-counts')
+    # top5 = template_ranking[:5]
+    # top5_template = []
+    # for top5_count in top5:
+    #     top_ppt = Powerpoint.objects.get(id=top5_count.template_id)
+    #     top5_template.append(top_ppt)
+
+    top5_template = Powerpoint.objects.all().order_by("-download_count")[:5]
+    # print('='*50)
+    # print(template_list)
 
     context = {
         "template_list": template_list,
@@ -139,7 +148,7 @@ def add_one_to_cart(request, template_id):
     }
 
     if not is_created:
-        return HttpResponse("이미 장바구니에 존재하는 템플릿입니다.")
+        return HttpResponse("")
 
     print("******", is_created)
 
@@ -213,20 +222,8 @@ def delete_cart_item(request, template_id):
 def download_count(request, template_id):
     template = Powerpoint.objects.get(pk=template_id)
 
-    try:
-        count = Count.objects.get(template_id=template_id)
-        #count.template = template.objects.get(template_id=template_id)
-        count.counts += 1
-        count.save()
-
-
-    except Count.DoesNotExist:
-        #count = Count(template_id=template_id, count=1)
-
-        Count.objects.create(
-            template=template,
-            counts=1,
-        )
+    template.download_count += 1
+    template.save()
 
     download_link = template.download_link
     context = {
