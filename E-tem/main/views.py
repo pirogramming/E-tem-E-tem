@@ -17,6 +17,21 @@ from django.contrib import messages
 
 
 def main(request):
+    if request.user.id:
+        # cart 비어있는 경우 로그인 시 오류나서 cart 만드는 코드가 이 부분에 있어야되니 지우지 말아주세요
+        try:
+            cart = Cart.objects.get(cart_id=request.user.id)
+        except Cart.DoesNotExist:
+            cart = Cart.objects.create(
+                cart_id=request.user.id
+            )
+            cart.save()
+        cart = Cart.objects.get(cart_id=request.user.id)
+        cartitem = CartItem.objects.filter(cart=cart.id)
+        count = cartitem.count()
+    else:
+        count = 0
+
     queryset = Powerpoint.objects.all().order_by("-download_count")
     colorset = ColorTag.objects.all()
     paginator = Paginator(queryset, 9)
@@ -38,6 +53,7 @@ def main(request):
 
 
     return render(request, 'main/main.html', {
+        'cart_count': count,
         'template_list': template_list,
         'colorset': colorset,
         'p_range': p_range,
@@ -48,6 +64,21 @@ def main(request):
 
 
 def color(request, id):
+    if request.user.id:
+        # cart 비어있는 경우 로그인 시 오류나서 cart 만드는 코드가 이 부분에 있어야되니 지우지 말아주세요
+        try:
+            cart = Cart.objects.get(cart_id=request.user.id)
+        except Cart.DoesNotExist:
+            cart = Cart.objects.create(
+                cart_id=request.user.id
+            )
+            cart.save()
+        cart = Cart.objects.get(cart_id=request.user.id)
+        cartitem = CartItem.objects.filter(cart=cart.id)
+        count = cartitem.count()
+    else:
+        count = 0
+
     colorset = ColorTag.objects.all()
     tag_list = PPT_tag.objects.filter(ppt_tag_id=id)
     ppt_list = []
@@ -84,6 +115,7 @@ def color(request, id):
     # print('='*50)
     # print(template_list)
     context = {
+        'cart_count': count,
         "template_list": template_list,
         "colorset": colorset,
         'p_range': p_range,
@@ -169,8 +201,17 @@ def show_download_list(request):
 
 @login_required
 def delete_cart_item(request, template_id):
+    cart = Cart.objects.get(cart_id=request.user.id)
+
     CartItem.objects.get(id=template_id).delete()
+
+    count = len(CartItem.objects.all())
+    print(count)
+    cart.quantity = count
+    cart.save()
+
     return redirect('cart')
+
 
 def download_count(request, template_id):
     template = Powerpoint.objects.get(pk=template_id)
