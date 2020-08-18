@@ -8,7 +8,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import math
 from django.contrib.auth.decorators import login_required
 
-
 from django.db import IntegrityError
 from django.contrib import messages
 
@@ -50,7 +49,6 @@ def main(request):
     next_block = int(page) + 5
 
     top5_template = Powerpoint.objects.all().order_by("-download_count")[:5]
-
 
     return render(request, 'main/main.html', {
         'cart_count': count,
@@ -201,7 +199,7 @@ def add_one_to_download_list(request, templates_id):
 @login_required
 def show_download_list(request):
     user_download_list = DownloadList.objects.get(user_id=request.user.id)
-    queryset = DownloadItem.objects.filter(download = user_download_list.id)
+    queryset = DownloadItem.objects.filter(download=user_download_list.id)
 
     contexts = {
         "download_items": queryset,
@@ -212,8 +210,7 @@ def show_download_list(request):
 @login_required
 def delete_cart_item(request, template_id):
     cart = Cart.objects.get(cart_id=request.user.id)
-    CartItem.objects.get(cart=cart.id,template_id = template_id).delete()
-
+    CartItem.objects.get(cart=cart.id, template_id=template_id).delete()
 
     count = len(CartItem.objects.all())
     cart.quantity = count
@@ -221,18 +218,16 @@ def delete_cart_item(request, template_id):
 
     return JsonResponse({})
 
+
 def cart_item_delete(request, template_id):
-
     cart = Cart.objects.get(cart_id=request.user.id)
-    CartItem.objects.get(cart=cart.id,template_id = template_id).delete()
-
+    CartItem.objects.get(cart=cart.id, template_id=template_id).delete()
 
     count = len(CartItem.objects.all())
     cart.quantity = count
     cart.save()
 
     return redirect('cart')
-
 
 
 def download_count(request, template_id):
@@ -245,31 +240,6 @@ def download_count(request, template_id):
         "download_link": download_link,
     }
     return JsonResponse({})
-# def download_count(request, template_id):
-#     template = Powerpoint.objects.get(pk=template_id)
-#
-#     try:
-#         count = Count.objects.get(template_id=template_id)
-#         #count.template = template.objects.get(template_id=template_id)
-#         count.counts += 1
-#         count.save()
-#
-#
-#     except Count.DoesNotExist:
-#         #count = Count(template_id=template_id, count=1)
-#
-#         Count.objects.create(
-#             template=template,
-#             counts=1,
-#         )
-#
-#     # contexts = {
-#     #     "download": count,
-#     #     "count": count.counts,
-#     # }
-#
-#     return render(request, '', {'download': template.download_link})
-
 
 def myinfo(request):
     return render(request, "main/mypage.html")

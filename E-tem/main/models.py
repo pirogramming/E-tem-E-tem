@@ -24,10 +24,9 @@ class Powerpoint(models.Model):
 
 class Cart(models.Model):
     cart_id = models.CharField(max_length=100, blank=True)
-    # cart_id = models.IntegerField(blank=True)
     user_num = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     quantity = models.IntegerField(default=0)
-    # ppt_cart = models.ManyToManyField(Powerpoint)
+
 
     def __str__(self):
         return self.cart_id
@@ -47,8 +46,6 @@ class CartItem(models.Model):
 class Recent(models.Model):
     user_num = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     recent_id = models.IntegerField(null=True)
-
-    # recent_id = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return self.recent_id

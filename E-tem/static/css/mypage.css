@@ -1,0 +1,21 @@
+.jumbotron {
+    margin-top: 20%;
+}
+
+a {
+    color: black;
+}
+
+.MyPage:hover {
+    color: pink;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.user_name{
+
+}
+

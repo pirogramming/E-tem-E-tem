@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet">
@@ -19,19 +18,7 @@
         position: relative;
     }
 
-    .All-checked {
-        position: absolute;
-        top: 30%;
-        left: 5%;
-    }
-
     a > .Check-Box {
-        position: absolute;
-        top: 10%;
-        left: 3%;
-    }
-
-    a > .Delete-Box {
         position: absolute;
         top: 10%;
         right: 3%;
@@ -43,13 +30,6 @@
     /*}*/</style>
 
     <div style="height: 20%"></div>
-
-    {% if not cart_items %}
-        장바구니에 담긴 템플릿이 없습니다.
-    {% endif %}
-
-
-
     <div class="album py-5 bg-light">
 
         <div class="album py-5 bg-light">
@@ -77,35 +57,24 @@
                                         </button>
                                     </a>
                                 </a>
-
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">
-                                        <a href="{% url 'cart_item_delete' ppt.id %}"
-                                           onclick="javascript:one_delete_success()">삭제</a>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">
-                                        <a data-name="{{ ppt.template.download_link }}" data-id="{{ ppt.template.id }}" class="add_to_download_list">
-                                            다운로드</a>
-                                    </button>
-                                </div>
-
                             </div>
                         </div>
                     {% endfor %}
                 </div>
             </div>
         </div>
+        <div style="height: 40%"></div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
     <script>
         function one_delete_success() {
             alert('템플릿 삭제.')
         }
-
-
-
     </script>
-    <script>
+
+<script>
         $('#All-checked').click(function () {
             if
             ($("input:checkbox[id='All-checked']").prop("checked")) {
@@ -138,7 +107,7 @@
                         dataType: "json",
                         async: false,
                         success: function (result) {
-                            location.href = '{% url 'cart' %}';
+                            location.href = "{% url 'cart' %}";
                         },
                     });
                 })(i);
@@ -167,10 +136,4 @@
 
     </script>
 
-
 {% endblock %}
-
-
-
-
-
