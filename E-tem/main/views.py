@@ -141,12 +141,22 @@ def add_one_to_cart(request, template_id):
         template=template,
         cart=cart,
     )
+    cartitems = CartItem.objects.filter(cart=cart.id)
+    count = cartitems.count()
+    print(count)
+    cart.quantity = count
+    cart.save()
+
+    context = {
+        'quantity': cart.quantity,
+    }
 
     if not is_created:
         return HttpResponse("")
 
     print("******", is_created)
-    return JsonResponse({})
+
+    return JsonResponse(context)
 
 
 @login_required

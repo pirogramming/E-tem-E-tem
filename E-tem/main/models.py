@@ -26,7 +26,7 @@ class Cart(models.Model):
     cart_id = models.CharField(max_length=100, blank=True)
     # cart_id = models.IntegerField(blank=True)
     user_num = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-
+    quantity = models.IntegerField(default=0)
     # ppt_cart = models.ManyToManyField(Powerpoint)
 
     def __str__(self):
