@@ -70,7 +70,7 @@
                                          style="align-items: center">
                                     <input type="checkbox" class="Check-Box" name="cart_checkbox"
                                            value={{ ppt.template.download_link }} id={{ ppt.template.id }}
-                                    data-name="{{ ppt.template.download_link }}"/>
+                                    data-name="{{ ppt.template.download_link }}" style="transform: scale(5); "/>
                                     <a href="{% url 'cart_item_delete' ppt.template_id %}">
                                         <button type="button" class="Delete-Box"
                                                 onclick="javascript:one_delete_success()">X

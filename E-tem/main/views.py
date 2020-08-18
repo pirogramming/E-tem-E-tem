@@ -219,8 +219,20 @@ def delete_cart_item(request, template_id):
     cart.quantity = count
     cart.save()
 
-    # return redirect('cart')
     return JsonResponse({})
+
+def cart_item_delete(request, template_id):
+
+    cart = Cart.objects.get(cart_id=request.user.id)
+    CartItem.objects.get(cart=cart.id,template_id = template_id).delete()
+
+
+    count = len(CartItem.objects.all())
+    cart.quantity = count
+    cart.save()
+
+    return redirect('cart')
+
 
 
 def download_count(request, template_id):
