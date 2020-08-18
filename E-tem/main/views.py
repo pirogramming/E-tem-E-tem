@@ -212,15 +212,15 @@ def show_download_list(request):
 @login_required
 def delete_cart_item(request, template_id):
     cart = Cart.objects.get(cart_id=request.user.id)
+    CartItem.objects.get(cart=cart.id,template_id = template_id).delete()
 
-    CartItem.objects.get(id=template_id).delete()
 
     count = len(CartItem.objects.all())
-    print(count)
     cart.quantity = count
     cart.save()
 
-    return redirect('cart')
+    # return redirect('cart')
+    return JsonResponse({})
 
 
 def download_count(request, template_id):
