@@ -28,25 +28,30 @@
             a:hover {
                 text-decoration: none;
             }
+
+            .card:hover {
+                transform: translateY(-10px);
+                transition: all ease-in-out 0.6s;
+            }
         </style>
     </head>
 
     <body style="background-color: #F2F2F2;">
 
-    <div style="height: 45%"></div>
-
+    <div style="height: 40%"></div>
+    <div>My Page</div>
+    <span class="user_name">{{ user }}님이 로그인 중입니댜</span>
     <div class="container">
 
         <div class="card-deck mb-3 text-center">
-
-            <div class="card mb-4 shadow-sm" style="padding-top: 5%; padding-bottom: 5%">
+            <div class="card mb-4 shadow-sm" style="padding-top: 5%; padding-bottom: 5%; ">
                 <a href="#" class="MyPage" style="color: black">
                     <i class="fas fa-file-alt fa-2x"></i>
                     <h4><br>사용방법</h4></a>
             </div>
 
             <div class="card mb-4 shadow-sm" style="padding-top: 5%; padding-bottom: 5%;">
-                <a href="{% url 'cart' %}" class="MyPage" style="color: black">
+                <a href="{% url 'cart' %}" class="MyPage" style="color: black;">
                     <i class="fas fa-shopping-basket fa-2x"></i>
                     <h4><br>장바구니</h4></a>
             </div>
@@ -54,7 +59,6 @@
             <div class="card mb-4 shadow-sm" style="padding-top: 5%; padding-bottom: 5%">
                 <a href="{% url 'download_list' %}" class="MyPage" style="color: black">
                     <i class="fas fa-download fa-2x"></i>
-
                     <h4><br>최근 다운받은 목록</h4></a>
             </div>
         </div>

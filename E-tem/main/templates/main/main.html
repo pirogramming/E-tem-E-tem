@@ -37,45 +37,9 @@
                                     class="fas fa-chevron-down"></i></a>
                         </div>
                     </section>
-                    <div class="wrapper" style="pointer-events: none; padding-top: 100px;">
-                    <div class="best">BEST <span style="color: pink"> TOP 5</span></div>
-                    <br>
-                    <div id="slider-wrap" class="top5_ppt">
-                        <ul id="slider" class="top5_ppt">
-                            {% for template in top5_template %}
-                                <li>
-                                    <img src={{ template.img_src }}>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-lg btn-secondary"
-                                                style="background-color:gray;opacity: 0.8">
-                                            <a data-id="{{ template.id }}" class="add_to_cart"
-                                               style="color: white; text-decoration: none">장바구니 담기</a>
-                                        </button>
-                                        <button type="button" class="btn btn-lg btn-secondary"
-                                                style="background-color:gray;opacity: 0.8;">
-                                            <a data-name="{{ template.download_link }}" data-id="{{ template.id }}"
-                                               class="add_to_download_list">개별 다운로드</a>
-                                            {#                                            <a href="{% url 'add_one_to_download_list' template.id %}"#}
-                                            {#                                               name="download"#}
-                                            {#                                               style="color: white; text-decoration: none">개별 다운로드</a>#}
-                                        </button>
-                                    </div>
-                                </li>
-                            {% endfor %}
-                        </ul>
 
-                        <!--controls-->
-                        <div class="btns" id="next"><i class="fa fa-arrow-right"></i></div>
-                        <div class="btns" id="previous"><i class="fa fa-arrow-left"></i></div>
-                        <div id="counter"></div>
-
-                        <div id="pagination-wrap">
-                            <ul>
-                            </ul>
-                        </div>
-                        <!--controls-->
-                    </div>
                 {% else %}
+
                     <div class="wrapper">
                         <div class="best">BEST <span style="color: pink"> TOP 5</span></div>
                         <br>
@@ -137,77 +101,32 @@
                     <div class="container">
                         {% if user.is_authenticated %}
                         {% else %}
-                            <section id="faq" class="faq">
-                                <div class="container aos-init aos-animate" data-aos="fade-up">
-
-                                    <div class="section-title">
-                                        <h2>"E-tem E-tem"은 어떤 사이트인가요?</h2>
-                                    </div>
-
-                                    <ul class="faq-list">
-                                        <li data-aos="fade-up" data-aos-delay="100" class="aos-init aos-animate">
-                                            <a data-toggle="collapse" class="collapsed" href="#faq1"
-                                               aria-expanded="false">* E-tem이란?<i
-                                                    class="icofont-simple-up"></i></a>
-                                            <div id="faq1" class="collapse" data-parent=".faq-list" style="">
-                                                <p>
-                                                    Every Template을 줄인 말
-                                                </p>
-                                            </div>
-                                        </li>
-
-                                        <li data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">
-                                            <a data-toggle="collapse" href="#faq2" class="collapsed"
-                                               aria-expanded="false"><i class="icofont-simple-up"></i>* 사이트의 목적?</a>
-                                            <div id="faq2" class="collapse" data-parent=".faq-list" style="">
-                                                <p>
-                                                    발표 준비할 때, PPT 만드느라 시간을 다 쓰는 사람들을 위해 만들게 됨.
-                                                </p>
-                                            </div>
-                                        </li>
-
-                                        <li data-aos="fade-up" data-aos-delay="300" class="aos-init aos-animate">
-                                            <a data-toggle="collapse" href="#faq3" class="collapsed">*어쩌고 .. <i
-                                                    class="icofont-simple-up"></i></a>
-                                            <div id="faq3" class="collapse" data-parent=".faq-list">
-                                                <p>
-                                                    Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis
-                                                    orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra
-                                                    diam sit amet nisl suscipit. Rutrum tellus pellentesque eu
-                                                    tincidunt. Lectus urna duis convallis convallis tellus. Urna
-                                                    molestie at elementum eu facilisis sed odio morbi quis
-                                                </p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </section>
                             <div class="previews_text">* 로그인 후 이용가능</div>
                         {% endif %}
-
+                {% if user.is_authenticated %}
                         <div class="row">
                             {% for ppt in template_list %}
                                 <div class="col-lg-4" style="overflow: hidden">
                                     <div class="card mb-4 shadow-sm col-lg-12"
                                          style="text-align: center; text-decoration: none">
 
-                                        {% if not user.is_authenticated %}
-                                            <div style="text-align: center"><img class="ppt_img"
-                                                                                 style="pointer-events: none;"
-                                                                                 src={{ ppt.img_src }} height="200vh"
-                                                                                 width="350vw"></div>
-                                        {% else %}
+
+{#                                            <div style="text-align: center"><img class="ppt_img"#}
+{#                                                                                 style="pointer-events: none;"#}
+{#                                                                                 src={{ ppt.img_src }} height="200vh"#}
+{#                                                                                 width="350vw"></div>#}
+
                                             <a href="{{ ppt.detail_page }}" target="_blank"
                                                style="text-decoration: none; color:black">
                                             <div style="text-align: center"><img class="ppt_img"
                                                                                  src={{ ppt.img_src }} height="200vh"
                                                                                  width="350vw"></div>
                                             <p class="img_text" style="margin-top: -40px"><strong>View Page</strong></p>
-                                        {% endif %}
+
 
                                         </a>
 
-                                        {% if user.is_authenticated %}
+
                                             <div class="btn-group "
                                                  style=" justify-content: space-around; margin: 10px 0">
                                                 <button type="button" class="btn btn-sm btn-outline-secondary ">
@@ -222,7 +141,7 @@
                                                     {#                                                       name="download" data-name="{{ ppt.download_link }}" data-id="{{ ppt.id }}" class="add_to_download_list">개별 다운로드</a>#}
                                                 </button>
                                             </div>
-                                        {% endif %}
+
                                     </div>
                                 </div>
                             {% endfor %}
@@ -245,7 +164,7 @@
                                 {% if template_list.number == i %}
                                     <li class="page-item active"><a href="?page={{ i }}"
                                                                     class="page-link"
-                                                                    style="background-color: pink; color: white; border-color: pink">{{ i }}</a></li>
+                                                                    style="background-color: #F6CED8; color: white; border-color: #F6CED8">{{ i }}</a></li>
                                 {% else %}
                                     <li class="page-item "><a href="?page={{ i }}" class="page-link"
                                                               style="color: gray">{{ i }}</a></li>
@@ -267,6 +186,7 @@
             </div>
             </div>
         </div>
+    {% endif %}
     </main>
     </body>
 
