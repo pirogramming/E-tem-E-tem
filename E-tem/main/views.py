@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from .models import *
 from django.urls import reverse
@@ -92,18 +92,8 @@ def color(request, id):
     p_range = paginator.page_range[start_block:end_block]
     previous_block = int(page) - 5
     next_block = int(page) + 5
-
-    # # ppt_list에 있는 ppt를 Count_template_id로 갖는 애들 get 한 다음에 order
-    # template_ranking = Count.objects.all().order_by('-counts')
-    # top5 = template_ranking[:5]
-    # top5_template = []
-    # for top5_count in top5:
-    #     top_ppt = Powerpoint.objects.get(id=top5_count.template_id)
-    #     top5_template.append(top_ppt)
-
     top5_template = Powerpoint.objects.all().order_by("-download_count")[:5]
-    # print('='*50)
-    # print(template_list)
+
     context = {
         'cart_count': count,
         "template_list": template_list,
