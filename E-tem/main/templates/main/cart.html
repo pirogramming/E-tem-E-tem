@@ -131,7 +131,43 @@
                     location.href = document.getElementsByName("cart_checkbox")[i].getAttribute('data-name')
                     sleep(1000);
                 }
+            }
+            const multi_delete_list = [];
+            var size = document.getElementsByClassName("Check-Box").length;
+            console.log(size)
+
+            for (var i = 0; i < size; i++) {
+                if (document.getElementsByClassName("Check-Box")[i].checked == true) {
+                    console.log(document.getElementsByClassName("Check-Box")[i].id)
+                    multi_delete_list.push(document.getElementsByClassName("Check-Box")[i].id)
                 }
+            }
+            for (var i = 0; i < multi_delete_list.length; i++) {
+                (function (i) {
+                    $.ajax({
+                        type: 'GET',
+                        url: `/remove/` + multi_delete_list[i],
+                        dataType: "json",
+                        async: false,
+                        success: function (result) {
+                            location.href = "{% url 'cart' %}";
+                        },
+                    });
+                })(i);
+            }
+            for (var i = 0; i < multi_delete_list.length; i++) {
+                (function (i) {
+                    $.ajax({
+                        type: 'GET',
+                        url: `/adds/` + multi_delete_list[i],
+                        dataType: "json",
+                        async: false,
+                        success: function (result) {
+                            location.href = "{% url 'cart' %}";
+                        },
+                    });
+                })(i);
+            }
             };
 
     </script>

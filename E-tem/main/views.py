@@ -181,13 +181,20 @@ def add_one_to_download_list(request, templates_id):
 @login_required
 def show_download_list(request):
     user_download_list = DownloadList.objects.get(user_id=request.user.id)
-    queryset = DownloadItem.objects.filter(download=user_download_list.id)
+    queryset = DownloadItem.objects.filter(download_id=user_download_list.id)
 
     contexts = {
         "download_items": queryset,
     }
     return render(request, "main/download_list.html", contexts)
 
+@login_required
+def reset_download_list(request):
+    user_download_list = DownloadList.objects.get(user_id=request.user.id)
+    download_item = DownloadItem.objects.filter(download=user_download_list.id).delete()
+    user_download_list.save()
+
+    return redirect('download_list')
 
 @login_required
 def delete_cart_item(request, template_id):
@@ -201,6 +208,7 @@ def delete_cart_item(request, template_id):
     return JsonResponse({})
 
 
+@login_required
 def cart_item_delete(request, template_id):
     cart = Cart.objects.get(cart_id=request.user.id)
     CartItem.objects.get(cart=cart.id, template_id=template_id).delete()
