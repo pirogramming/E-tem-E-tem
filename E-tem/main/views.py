@@ -225,3 +225,11 @@ def download_count(request, template_id):
 
 def myinfo(request):
     return render(request, "main/mypage.html")
+
+@login_required
+def reset_download_list(request):
+    user_download_list = DownloadList.objects.get(user_id=request.user.id)
+    download_item = DownloadItem.objects.filter(download=user_download_list.id).delete()
+    user_download_list.save()
+
+    return redirect('download_list')

@@ -87,7 +87,7 @@ a {
 
 .wrapper {
     position: relative;
-    margin-left: 30%;
+    margin-left: 33%;
     padding-top: 15%;
     padding-bottom: 100px;
 }
@@ -100,7 +100,7 @@ a {
 .top5_ppt_text {
     padding-top: 50px;
     color: black;
-    margin-left: 0%;
+    margin-left: 0;
     font-weight: bolder;
     z-index: 9999;
 }

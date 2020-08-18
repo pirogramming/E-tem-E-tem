@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
           integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
           crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     </head>
 
     <body>
@@ -48,11 +49,11 @@
                                 {% for template in top5_template %}
                                     <li>
                                         <img src={{ template.img_src }}>
-                                        <div class="btn-group">
+                                        <div class="btn-group" style="margin-top: 50%; margin-left: 25%">
                                             <button type="button" class="btn btn-lg btn-secondary"
                                                     style="background-color:gray;opacity: 0.8">
                                                 <a data-id="{{ template.id }}" class="add_to_cart"
-                                                   style="color: white; text-decoration: none">장바구니 담기</a>
+                                                   style="text-decoration: none">장바구니 담기</a>
                                             </button>
                                             <button type="button" class="btn btn-lg btn-secondary"
                                                     style="background-color:gray;opacity: 0.8;">
@@ -87,9 +88,9 @@
             {% if user.is_authenticated %}
                 <div style="position: relative; float: right; width: 80px; height: 80px">
 
-                    <div id="cartscroll" style="position:absolute;top:0px;right: 10%; z-index: 999">
+                    <div id="cartscroll" style="margin-right: 20%; position:absolute;top:0px;right: 10%; z-index: 999">
                         <a href="{% url 'cart' %}"><img
-                                src="https://icon-library.net/images/free-shopping-cart-icon/free-shopping-cart-icon-3.jpg"
+                                src="https://icon-library.net//images/white-shopping-cart-icon/white-shopping-cart-icon-5.jpg"
                                 style="width: 80px; height: 80px; border-radius: 50%; "/></a>
                         <p id="carticon" style="text-align: center">{{ cart_count }}</p>
                     </div>
@@ -167,7 +168,7 @@
                                                                     style="background-color: #F6CED8; color: white; border-color: #F6CED8">{{ i }}</a></li>
                                 {% else %}
                                     <li class="page-item "><a href="?page={{ i }}" class="page-link"
-                                                              style="color: gray">{{ i }}</a></li>
+                                                              style="font-family: 'Poppins', sans-serif;color: gray">{{ i }}</a></li>
                                 {% endif %}
                             {% endfor %}
 
