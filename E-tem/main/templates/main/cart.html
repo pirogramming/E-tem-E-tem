@@ -50,7 +50,9 @@
                                            onclick="javascript:one_delete_success()">삭제</a>
                                     </button>
                                     <button type="button" class="btn btn-sm btn-outline-secondary">
-                                        <a href="{{ ppt.template.download_link }}">다운로드</a>
+                                        <a data-name="{{ ppt.template.download_link }}" data-id="{{ ppt.template.id }}"
+                                           class="add_to_download_list">
+                                            다운로드</a>
                                     </button>
                                 </div>
                             </div>
@@ -59,6 +61,7 @@
                 </div>
             </div>
         </div>
+        <div style="height: 40%"></div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>

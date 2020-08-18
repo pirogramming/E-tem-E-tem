@@ -10,23 +10,23 @@ class Powerpoint(models.Model):
     img_src = models.URLField()
     download_link = models.TextField(blank=True, null=True)
     detail_page = models.TextField(blank=True, null=True)
-
+    download_count = models.IntegerField(default =0)
     # color_tag = models.TextField(blank=True, null=True)
     # id = models.IntegerField(primary_key=True, blank=True)
 
     class Meta:
         db_table = 'pptbizcam_real'
 
-class Count(models.Model):
-    template = models.ForeignKey(Powerpoint, on_delete=models.CASCADE)
-    counts = models.IntegerField(default=0)
+# class Count(models.Model):
+#     template = models.ForeignKey(Powerpoint, on_delete=models.CASCADE)
+#     counts = models.IntegerField(default=0)
 
 
 class Cart(models.Model):
     cart_id = models.CharField(max_length=100, blank=True)
     # cart_id = models.IntegerField(blank=True)
     user_num = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-
+    quantity = models.IntegerField(default=0)
     # ppt_cart = models.ManyToManyField(Powerpoint)
 
     def __str__(self):

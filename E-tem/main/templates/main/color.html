@@ -44,9 +44,9 @@
                                         </button>
                                         <button type="button" class="btn btn-lg btn-secondary"
                                                 style="background-color:gray;opacity: 0.8;">
-                                            <a href="{% url 'add_one_to_download_list' template.id %}"
-                                               name="download"
-                                               style="color: white; text-decoration: none">개별 다운로드</a>
+                                            <a data-name="{{ template.download_link }}" data-id="{{ template.id }}"
+                                       class="add_to_download_list">개별
+                                        다운로드</a>
                                         </button>
                                     </div>
                                 </li>
@@ -81,9 +81,9 @@
                                             </button>
                                             <button type="button" class="btn btn-lg btn-secondary"
                                                     style="background-color:gray;opacity: 0.8;">
-                                                <a href="{% url 'add_one_to_download_list' template.id %}"
-                                                   name="download"
-                                                   style="color: white; text-decoration: none">개별 다운로드</a>
+                                               <a data-name="{{ template.download_link }}" data-id="{{ template.id }}"
+                                       class="add_to_download_list">개별
+                                        다운로드</a>
                                             </button>
                                         </div>
                                     </li>
@@ -147,8 +147,8 @@
                                                         <i class="fas fa-shopping-basket fa-2x"></i>&nbsp; 장바구니 담기</a>
                                                 </button>
                                                 <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                    <a href="{% url 'add_one_to_download_list' ppt.id %}"
-                                                       class="download"><i class="fas fa-download fa-2x"></i>개별 다운로드</a>
+                                                    <a data-name="{{ ppt.download_link }}" data-id="{{ ppt.id }}"
+                                               class="add_to_download_list"><i class="fas fa-download fa-2x"></i>개별 다운로드</a>
                                                 </button>
                                             </div>
                                         {% endif %}
@@ -200,9 +200,13 @@
     </body>
 
     <!--여기에 ajax로 장바구니 담기-->
+    <!--여기에 ajax로 장바구니 담기-->
     <script>
 
         $(document).ready(function () {
+            $(window).scroll(function () {
+                $('#cartscroll').animate({top: $(window).scrollTop() + "px"}, {queue: false, duration: 100});
+            });
             $('.add_to_cart').on('click', function () {
                 const templateId = $(this).attr('data-id')
                 $.ajax({
@@ -212,24 +216,21 @@
                     dataType: "json",
                     success: function (data) {
                         alert("담겼습니다.");
+                        $("#carticon").html(data.quantity);
                     },
                     error: function (data) {
-                        alert('안담김')
+                        alert('이미 담겨있는 PPT입니당!! 껄껄껄');
                     }
                 })
             })
         });
 
-    </script>
 
-    <script>
         $(window).scroll(function () {
             $('#cartscroll').animate({top: $(window).scrollTop() + "px"}, {queue: false, duration: 100});
         });
 
-    </script>
 
-    <script>
         //current position
         var pos = 0;
         //number of slides
@@ -341,5 +342,166 @@
         }
 
 
+        $(document).ready(function () {
+            $('.add_to_download_list').on('click', function () {
+                const download_link = $(this).attr('data-name')
+                const templateId = $(this).attr('data-id')
+                console.log(download_link)
+                console.log(templateId)
+                $.ajax({
+                    type: 'GET',
+                    url: `/adds/${templateId}`,
+                    data: templateId,
+                    dataType: "json",
+                    success: function (data) {
+                        location.href = download_link;
+                    }
+                })
+
+            })
+
+        });
     </script>
+{#    <script>#}
+{##}
+{#        $(document).ready(function () {#}
+{#            $('.add_to_cart').on('click', function () {#}
+{#                const templateId = $(this).attr('data-id')#}
+{#                $.ajax({#}
+{#                    type: 'GET',#}
+{#                    url: `/add/${templateId}`,#}
+{#                    data: templateId,#}
+{#                    dataType: "json",#}
+{#                    success: function (data) {#}
+{#                        alert("담겼습니다.");#}
+{#                    },#}
+{#                    error: function (data) {#}
+{#                        alert('안담김')#}
+{#                    }#}
+{#                })#}
+{#            })#}
+{#        });#}
+{##}
+{#    </script>#}
+{##}
+{#    <script>#}
+{#        $(window).scroll(function () {#}
+{#            $('#cartscroll').animate({top: $(window).scrollTop() + "px"}, {queue: false, duration: 100});#}
+{#        });#}
+{##}
+{#    </script>#}
+{##}
+{#    <script>#}
+{#        //current position#}
+{#        var pos = 0;#}
+{#        //number of slides#}
+{#        var totalSlides = $('#slider-wrap ul li').length;#}
+{#        //get the slide width#}
+{#        var sliderWidth = $('#slider-wrap').width();#}
+{##}
+{##}
+{#        $(document).ready(function () {#}
+{##}
+{##}
+{#            /*****************#}
+{#             BUILD THE SLIDER#}
+{#             *****************/#}
+{#            //set width to be 'x' times the number of slides#}
+{#            $('#slider-wrap ul#slider').width(sliderWidth * totalSlides);#}
+{##}
+{#            //next slide#}
+{#            $('#next').click(function () {#}
+{#                slideRight();#}
+{#            });#}
+{##}
+{#            //previous slide#}
+{#            $('#previous').click(function () {#}
+{#                slideLeft();#}
+{#            });#}
+{##}
+{##}
+{#            /*************************#}
+{#             //*> OPTIONAL SETTINGS#}
+{#             ************************/#}
+{#                //automatic slider#}
+{#            var autoSlider = setInterval(slideRight, 3000);#}
+{##}
+{#            //for each slide#}
+{#            $.each($('#slider-wrap ul li'), function () {#}
+{##}
+{#                //create a pagination#}
+{#                var li = document.createElement('li');#}
+{#                $('#pagination-wrap ul').append(li);#}
+{#            });#}
+{##}
+{#            //counter#}
+{#            countSlides();#}
+{##}
+{#            //pagination#}
+{#            pagination();#}
+{##}
+{#            //hide/show controls/btns when hover#}
+{#            //pause automatic slide when hover#}
+{#            $('#slider-wrap').hover(#}
+{#                function () {#}
+{#                    $(this).addClass('active');#}
+{#                    clearInterval(autoSlider);#}
+{#                },#}
+{#                function () {#}
+{#                    $(this).removeClass('active');#}
+{#                    autoSlider = setInterval(slideRight, 3000);#}
+{#                }#}
+{#            );#}
+{##}
+{##}
+{#        });//DOCUMENT READY#}
+{##}
+{##}
+{#        /***********#}
+{#         SLIDE LEFT#}
+{#         ************/#}
+{#        function slideLeft() {#}
+{#            pos--;#}
+{#            if (pos == -1) {#}
+{#                pos = totalSlides - 1;#}
+{#            }#}
+{#            $('#slider-wrap ul#slider').css('left', -(sliderWidth * pos));#}
+{##}
+{#            //*> optional#}
+{#            countSlides();#}
+{#            pagination();#}
+{#        }#}
+{##}
+{##}
+{#        /************#}
+{#         SLIDE RIGHT#}
+{#         *************/#}
+{#        function slideRight() {#}
+{#            pos++;#}
+{#            if (pos == totalSlides) {#}
+{#                pos = 0;#}
+{#            }#}
+{#            $('#slider-wrap ul#slider').css('left', -(sliderWidth * pos));#}
+{##}
+{#            //*> optional#}
+{#            countSlides();#}
+{#            pagination();#}
+{#        }#}
+{##}
+{##}
+{#        /************************#}
+{#         //*> OPTIONAL SETTINGS#}
+{#         ************************/#}
+{#        function countSlides() {#}
+{#            $('#counter').html(pos + 1 + ' / ' + totalSlides);#}
+{#            document.getElementById("counter").style.color = "black";#}
+{#        }#}
+{##}
+{#        function pagination() {#}
+{#            $('#pagination-wrap ul li').removeClass('active');#}
+{#            $('#pagination-wrap ul li:eq(' + pos + ')').addClass('active');#}
+{#        }#}
+{##}
+{##}
+{#    </script>#}
 {% endblock %}

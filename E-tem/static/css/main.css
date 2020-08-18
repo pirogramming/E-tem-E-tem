@@ -28,7 +28,7 @@ a {
     background-color: pink;
     border: black solid 3px;
     transition: 0.3s;
-    color:gray;
+    color: gray;
     opacity: 0.8;
 }
 
@@ -42,11 +42,12 @@ a {
     /*font-family: 'Noto Sans JP', sans-serif;*/
     color: black;
 }
-.big-text > h1, span{
+
+.big-text > h1, span {
 
 }
 
-.powerpiont_text{
+.powerpiont_text {
     font-size: 10px;
 }
 
@@ -62,7 +63,7 @@ a {
 
 }
 
-.ppt_img .img_text{
+.ppt_img .img_text {
     color: #fff;
     font-size: 10px;
     align-items: center;
@@ -71,7 +72,7 @@ a {
     z-index: 9999;
     text-align: center;
     transform: translateY(10px);
-    transition: opacity .5s ease-in-out,transform .5s ease-in-out;
+    transition: opacity .5s ease-in-out, transform .5s ease-in-out;
 }
 
 
@@ -80,23 +81,23 @@ a {
     background-color: #F2F2F2;
 }
 
-.album{
+.album {
     background-color: #FFFFff;
 }
 
-.wrapper{
-  position: relative;
-  margin-left: 30%;
+.wrapper {
+    position: relative;
+    margin-left: 30%;
     padding-top: 15%;
     padding-bottom: 100px;
 }
 
-.display-2{
+.display-2 {
     color: black;
 }
 
 
-.top5_ppt_text{
+.top5_ppt_text {
     padding-top: 50px;
     color: black;
     margin-left: 0%;
@@ -104,14 +105,14 @@ a {
     z-index: 9999;
 }
 
-.top5_ppt_text > h1{
+.top5_ppt_text > h1 {
     font-family: 'Gothic A1', sans-serif;
     color: black;
     padding-top: 10px;
     z-index: 9999;
 }
 
-.etem_description{
+.etem_description {
     position: relative;
     height: 5vh;
     background-color: lightsalmon;
@@ -128,29 +129,124 @@ a {
     font-style: italic;
 }
 
-.previews_text{
+.previews_text {
     font-family: 'Gothic A1', sans-serif;
     text-align: center;
     padding-bottom: 3%;
 }
 
-.btn{
+.btn {
     background-color: #F2F2F2;
     border: none;
     font-size: 15px;
 }
 
-.btn-group{
+.btn-group {
     background-color: #F2F2F2;
 }
 
-.btn:hover{
+.btn:hover {
     background-color: #F2F2F2;
     color: pink;
 }
 
-.download:hover{
-    color:pink;
+.download:hover {
+    color: pink;
     text-decoration: none;
 }
+
+#hero {
+  width: 100%;
+  background: url("https://i.pinimg.com/originals/83/27/eb/8327eb19150175084b0abe11b1a37d8a.png") top right;
+  background-size: cover;
+  position: relative;
+}
+
+#hero:before {
+  content: "";
+  background: rgba(0, 0, 0, 0.65);
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+#hero .hero-container {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 0 15px;
+}
+
+#hero h1 {
+  margin: 0 0 10px 0;
+  font-size: 64px;
+  font-family: "Satisfy", serif;
+  color: #fff;
+}
+
+#hero h2 {
+  color: #eee;
+  margin-bottom: 50px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+#hero .btn-scroll {
+  transition: 0.4s;
+  color: rgba(255, 255, 255, 0.6);
+  animation: up-down 1s ease-in-out infinite alternate-reverse both;
+}
+
+#hero .btn-scroll i {
+  font-size: 48px;
+}
+
+#hero .btn-scroll:hover {
+  color: #ffb727;
+}
+
+@media (min-width: 1024px) {
+  #hero {
+    background-attachment: fixed;
+  }
+}
+
+@media (max-width: 575px) {
+  #hero h1 {
+    font-size: 40px;
+  }
+  #hero h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+}
+
+@-webkit-keyframes up-down {
+  0% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes up-down {
+  0% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(-5px);
+  }
+}
+
 

@@ -17,7 +17,22 @@ from django.contrib import messages
 
 
 def main(request):
-    queryset = Powerpoint.objects.all().order_by("id")
+    if request.user.id:
+        # cart 비어있는 경우 로그인 시 오류나서 cart 만드는 코드가 이 부분에 있어야되니 지우지 말아주세요
+        try:
+            cart = Cart.objects.get(cart_id=request.user.id)
+        except Cart.DoesNotExist:
+            cart = Cart.objects.create(
+                cart_id=request.user.id
+            )
+            cart.save()
+        cart = Cart.objects.get(cart_id=request.user.id)
+        cartitem = CartItem.objects.filter(cart=cart.id)
+        count = cartitem.count()
+    else:
+        count = 0
+
+    queryset = Powerpoint.objects.all().order_by("-download_count")
     colorset = ColorTag.objects.all()
     paginator = Paginator(queryset, 9)
     page = request.GET.get('page')
@@ -34,14 +49,11 @@ def main(request):
     previous_block = int(page) - 5
     next_block = int(page) + 5
 
-    template_ranking = Count.objects.all().order_by('-counts')
-    top5 = template_ranking[:5]
-    top5_template = []
-    for top5_count in top5:
-        top_ppt = Powerpoint.objects.get(id=top5_count.template_id)
-        top5_template.append(top_ppt)
+    top5_template = Powerpoint.objects.all().order_by("-download_count")[:5]
+
 
     return render(request, 'main/main.html', {
+        'cart_count': count,
         'template_list': template_list,
         'colorset': colorset,
         'p_range': p_range,
@@ -52,16 +64,33 @@ def main(request):
 
 
 def color(request, id):
+    if request.user.id:
+        # cart 비어있는 경우 로그인 시 오류나서 cart 만드는 코드가 이 부분에 있어야되니 지우지 말아주세요
+        try:
+            cart = Cart.objects.get(cart_id=request.user.id)
+        except Cart.DoesNotExist:
+            cart = Cart.objects.create(
+                cart_id=request.user.id
+            )
+            cart.save()
+        cart = Cart.objects.get(cart_id=request.user.id)
+        cartitem = CartItem.objects.filter(cart=cart.id)
+        count = cartitem.count()
+    else:
+        count = 0
+
     colorset = ColorTag.objects.all()
     tag_list = PPT_tag.objects.filter(ppt_tag_id=id)
     ppt_list = []
     for tag in tag_list:
-        ppt = Powerpoint.objects.get(id=tag.template_id)
-        ppt_list.append(ppt)
+        ppt = Powerpoint.objects.filter(id=tag.template_id)
+        ppt_list += ppt
+    ppt_list = sorted(ppt_list, key=lambda tem: (tem.download_count), reverse=True)
     # ppt_list = tag_list.powerpoint.all()
     paginator = Paginator(ppt_list, 9)
     page = request.GET.get('page')
     template_list = paginator.get_page(page)
+
     page_range = 5
     try:
         current_block = math.ceil(int(page) / page_range)
@@ -74,15 +103,19 @@ def color(request, id):
     previous_block = int(page) - 5
     next_block = int(page) + 5
 
-    # ppt_list에 있는 ppt를 Count_template_id로 갖는 애들 get 한 다음에 order
-    template_ranking = Count.objects.all().order_by('-counts')
-    top5 = template_ranking[:5]
-    top5_template = []
-    for top5_count in top5:
-        top_ppt = Powerpoint.objects.get(id=top5_count.template_id)
-        top5_template.append(top_ppt)
+    # # ppt_list에 있는 ppt를 Count_template_id로 갖는 애들 get 한 다음에 order
+    # template_ranking = Count.objects.all().order_by('-counts')
+    # top5 = template_ranking[:5]
+    # top5_template = []
+    # for top5_count in top5:
+    #     top_ppt = Powerpoint.objects.get(id=top5_count.template_id)
+    #     top5_template.append(top_ppt)
 
+    top5_template = Powerpoint.objects.all().order_by("-download_count")[:5]
+    # print('='*50)
+    # print(template_list)
     context = {
+        'cart_count': count,
         "template_list": template_list,
         "colorset": colorset,
         'p_range': p_range,
@@ -108,12 +141,22 @@ def add_one_to_cart(request, template_id):
         template=template,
         cart=cart,
     )
+    cartitems = CartItem.objects.filter(cart=cart.id)
+    count = cartitems.count()
+    print(count)
+    cart.quantity = count
+    cart.save()
+
+    context = {
+        'quantity': cart.quantity,
+    }
 
     if not is_created:
-        return HttpResponse("이미 장바구니에 존재하는 템플릿입니다.")
+        return HttpResponse("")
 
     print("******", is_created)
-    return JsonResponse({})
+
+    return JsonResponse(context)
 
 
 @login_required
@@ -168,34 +211,52 @@ def show_download_list(request):
 
 @login_required
 def delete_cart_item(request, template_id):
+    cart = Cart.objects.get(cart_id=request.user.id)
+
     CartItem.objects.get(id=template_id).delete()
+
+    count = len(CartItem.objects.all())
+    print(count)
+    cart.quantity = count
+    cart.save()
+
     return redirect('cart')
 
 
 def download_count(request, template_id):
     template = Powerpoint.objects.get(pk=template_id)
+    template.download_count += 1
+    template.save()
 
-    try:
-        count = Count.objects.get(template_id=template_id)
-        #count.template = template.objects.get(template_id=template_id)
-        count.counts += 1
-        count.save()
-
-
-    except Count.DoesNotExist:
-        #count = Count(template_id=template_id, count=1)
-
-        Count.objects.create(
-            template=template,
-            counts=1,
-        )
-
-    # contexts = {
-    #     "download": count,
-    #     "count": count.counts,
-    # }
-
-    return render(request, '', {'download': template.download_link})
+    download_link = template.download_link
+    context = {
+        "download_link": download_link,
+    }
+    return JsonResponse({})
+# def download_count(request, template_id):
+#     template = Powerpoint.objects.get(pk=template_id)
+#
+#     try:
+#         count = Count.objects.get(template_id=template_id)
+#         #count.template = template.objects.get(template_id=template_id)
+#         count.counts += 1
+#         count.save()
+#
+#
+#     except Count.DoesNotExist:
+#         #count = Count(template_id=template_id, count=1)
+#
+#         Count.objects.create(
+#             template=template,
+#             counts=1,
+#         )
+#
+#     # contexts = {
+#     #     "download": count,
+#     #     "count": count.counts,
+#     # }
+#
+#     return render(request, '', {'download': template.download_link})
 
 
 def myinfo(request):
