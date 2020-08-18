@@ -296,17 +296,7 @@
                 </button>
             </div>
         {% endif %}
-        {% if user.is_authenticated %}
-            <div style="position: relative; float: right; width: 80px; height: 80px">
 
-                <div id="cartscroll" style="position:absolute;top:0px;right: 10%; z-index: 999">
-                    <a href="{% url 'cart' %}"><img
-                            src="https://icon-library.net/images/free-shopping-cart-icon/free-shopping-cart-icon-3.jpg"
-                            style="width: 80px; height: 80px; border-radius: 50%; "/></a>
-                    <p id="carticon" style="text-align: center">{{ cart_count }}개</p>
-                </div>
-            </div>
-        {% endif %}
         <div class="color_select ">
 
             <a href="{% url 'main' %}">&#127968;</a>
@@ -323,6 +313,18 @@
             <a href="{% url 'color' 12 %}">🌪</a>
             <a href="{% url 'color' 10 %}">&#127752;</a>
         </div>
+
+        {% if user.is_authenticated %}
+            <div style="position: relative; float: right; width: 80px; height: 80px">
+
+                <div id="cartscroll" style="position:absolute;top:0px;right: 10%; z-index: 999">
+                    <a href="{% url 'cart' %}"><img
+                            src="https://icon-library.net/images/free-shopping-cart-icon/free-shopping-cart-icon-3.jpg"
+                            style="width: 80px; height: 80px; border-radius: 50%; "/></a>
+                    <p id="carticon" style="text-align: center">{{ cart_count }}</p>
+                </div>
+            </div>
+        {% endif %}
 
 
         <div class="album py-5 bg-light">
@@ -407,7 +409,7 @@
                     dataType: "json",
                     success: function (data) {
                         alert("담겼습니다.");
-                        $("#carticon").html(response.quantity);
+                        $("#carticon").html(data.quantity);
                     },
                     error: function (data) {
                         alert('이미 담겨있는 PPT입니당!! 껄껄껄');
