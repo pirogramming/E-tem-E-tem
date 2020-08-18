@@ -1,5 +1,3 @@
-import time
-
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from .models import *
@@ -7,12 +5,6 @@ from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import math
 from django.contrib.auth.decorators import login_required
-
-from django.db import IntegrityError
-from django.contrib import messages
-
-
-# Create your views here.
 
 
 def main(request):

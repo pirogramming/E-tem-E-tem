@@ -14,7 +14,7 @@ SECRET_KEY = '2&m@pejd4^g0m-so3c8rrdlhhjnjy-5y7dgo-#u*#q0b35zezs'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -134,7 +134,7 @@ AUTHENTICATION_BACKENDS = (
 SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/'
-ACCOUNT_LOGOUT_ON_GET= True
+ACCOUNT_LOGOUT_ON_GET = True
 LOGOUT_REDIRECT_URL = '/'
 
 STATICFILES_DIRS = [
