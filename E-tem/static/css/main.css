@@ -18,7 +18,6 @@ a {
     z-index: 9999;
     border: black solid 3px;
     background: transparent;
-    padding: 15px;
     border-radius: 5px;
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: bolder;
@@ -248,5 +247,3 @@ a {
     transform: translateY(-5px);
   }
 }
-
-

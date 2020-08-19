@@ -11,35 +11,85 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
               integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
               crossorigin="anonymous">
+
+
+        <style>
+
+            .card {
+                position: relative;
+                overflow: hidden;
+            }
+
+            a {
+                color: black;
+            }
+
+            a:hover {
+                text-decoration: none;
+                color: #ffffff;
+            }
+
+            .reset {
+                float: right;
+                margin-top: -3%;
+                background-color: #ffffff;
+                border: #f2f2f2 solid 3px;
+                border-radius: 5px;
+            }
+
+            .reset:hover {
+                transition: 0.7s;
+                background-color: black;
+                border: black solid 3px;
+                color: #ffffff;
+            }
+
+
+        </style>
     </head>
 
 
 
-    <div style="height: 20%"></div>
-
-    <button type="button">
-        <a href="{%url 'reset_download_list' %}">초기화</a>
-    </button>
+    <div style="height: 18%"></div>
 
     <div class="album py-5 bg-light">
-
+        <div class="mypage_title"
+             style="text-align: center; font-size: 30px; font-weight: bolder; padding-top: 2%"><i
+                class="fas fa-download fa-1x"></i> &nbsp; Download List
+            <br><br><span class="user_name"
+                          style="font-size: 20px;font-weight: lighter;"><strong>{{ user }}</strong>님의 다운받은 PPT 목록</span>
+            <br><br>
+        </div>
         <div class="album py-5 bg-light">
             <div class="container">
+                <button type="button" class="reset">
+                    <a href="{% url 'reset_download_list' %}">초기화</a>
+                </button>
+                <br>
+                <hr>
+                <br>
                 <div class="row">
                     {% for ppt in download_items %}
-                        <div class="col-lg-4  ">
-                            <div class="card mb-4 shadow-sm col-lg-12" style="text-align: center;">
+                        <div class="col-lg-4">
+                            <div class="card mb-4 shadow-sm col-lg-12"
+                                 style="text-align: center; overflow: hidden;padding-left: 0px;padding-right: 0px;">
                                 <a href={{ ppt.templates.detail_page }} target="_blank">
-                                    <img src={{ ppt.templates.img_src }} height="200" width="350"
-                                         style="align-items: center">
+                                    <div style="text-align: center"><img src={{ ppt.templates.img_src }} height="220vh"
+                                                                         width="350vw"></div>
+
                                 </a>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" style="border: #ffffff;">
+                                    <a data-name="{{ ppt.download_link }}" data-id="{{ ppt.id }}"
+                                       class="add_to_download_list"><i
+                                            class="fas fa-download fa-2x"></i>&nbsp재다운로드</a>
+                                </button>
                             </div>
                         </div>
                     {% endfor %}
                 </div>
             </div>
         </div>
-        <div style="height: 15%"></div>
+        <div style="height: 30%"></div>
     </div>
 
 
@@ -47,5 +97,6 @@
         function one_delete_success() {
             alert('템플릿이 삭제 되었습니다.')
         }
+
     </script>
 {% endblock %}

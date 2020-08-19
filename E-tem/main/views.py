@@ -226,6 +226,9 @@ def download_count(request, template_id):
 def myinfo(request):
     return render(request, "main/mypage.html")
 
+def site(request):
+    return render(request, "main/site.html")
+
 @login_required
 def reset_download_list(request):
     user_download_list = DownloadList.objects.get(user_id=request.user.id)

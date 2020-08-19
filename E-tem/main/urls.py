@@ -14,4 +14,5 @@ urlpatterns = [
     path('count/<int:template_id>/', download_count, name="download_count"),
     path('color/<int:id>/', color, name="color"),
     path('reset/', reset_download_list, name='reset_download_list'),
+    path('main/site/', site, name='site'),
 ]
