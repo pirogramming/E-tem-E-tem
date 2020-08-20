@@ -180,14 +180,21 @@ def add_one_to_download_list(request, templates_id):
 
 @login_required
 def show_download_list(request):
+    # download 비어있는 경우 로그인 시 오류나서 download 만드는 코드가 이 부분에 있어야되니 지우지 말아주세요
+    try:
+        download_list = DownloadList.objects.get(user_id=request.user.id)
+    except DownloadList.DoesNotExist:
+        download_list = DownloadList.objects.create(
+            user_id=request.user.id
+        )
+        download_list.save()
     user_download_list = DownloadList.objects.get(user_id=request.user.id)
-    queryset = DownloadItem.objects.filter(download=user_download_list.id)
+    queryset = DownloadItem.objects.filter(download = user_download_list.id)
 
     contexts = {
         "download_items": queryset,
     }
     return render(request, "main/download_list.html", contexts)
-
 
 @login_required
 def delete_cart_item(request, template_id):
